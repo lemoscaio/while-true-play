@@ -17,4 +17,8 @@ export default function Header() {
     )
 }
 
-const Nav = styled.header``
+const Nav = styled.header`
+    width: 100vw;
+    height: 50px;
+    position: fixed;
+`
