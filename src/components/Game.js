@@ -60,6 +60,7 @@ export default function Game() {
                 <h2 style={hasDiscount ? { marginLeft: "46%" } : {}}>
                     R$ {hasDiscount ? discountedPrice : price}
                 </h2>
+                {/*!!! ADD FUNCTIONALITY TO BUTTON !!!*/}
                 <button>
                     <BsCartPlus />
                     Add to cart
