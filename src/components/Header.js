@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from "react"
 import { TiShoppingCart } from "react-icons/ti"
 import { BiSearchAlt2 } from "react-icons/bi"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
+import axios from "axios"
 
 import StoreLogo from "./../assets/logo.png"
 import UserContext from "../contexts/UserContext"
@@ -17,17 +18,17 @@ export default function Header() {
     const [searchParams, setSearchParams] = useState("")
     const navigator = useNavigate()
 
-    useEffect(() => {
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" && search) {
-                searchGame()
-            }
-        })
-    })
-
     function searchGame() {
-        navigator(`/games?q=${searchParams}`)
-        setSearch(false)
+        const promise = axios.get(
+            `http://localhost:5000/games?q=${searchParams}`
+        )
+        promise.then((response) => {
+            navigator(`/games?q=${searchParams}`)
+            setSearch(false)
+        })
+        promise.catch((e) => {
+            console.log(e)
+        })
     }
 
     return (
@@ -38,6 +39,11 @@ export default function Header() {
                     <input
                         type="text"
                         onChange={(e) => setSearchParams(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                searchGame()
+                            }
+                        }}
                     />
                     <AiOutlineClose
                         onClick={() => {
