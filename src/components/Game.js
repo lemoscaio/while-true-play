@@ -13,7 +13,19 @@ export default function Game() {
 
     const { userInfo, setUserInfo } = useContext(UserContext)
     const [gameInfo, setGameInfo] = useState({})
-    const price = gameInfo?.price?.toFixed(2)
+    let price
+    let discountedPrice
+
+    const hasDiscount = gameInfo["has-discount"]
+
+    if (hasDiscount) {
+        discountedPrice =
+            gameInfo?.price - gameInfo?.price * gameInfo["discount-amount"]
+        discountedPrice = discountedPrice.toFixed(2)
+        price = gameInfo?.price?.toFixed(2)
+    } else {
+        price = gameInfo?.price?.toFixed(2)
+    }
 
     useEffect(() => {
         const promise = axios.get(URL)
@@ -37,7 +49,16 @@ export default function Game() {
             </TitleContainer>
 
             <BuyContainer>
-                <h2>R$ {price}</h2>
+                {/*!!! FIX DISCOUNT MARGIN ON DIFFERENT SCREENS !!! */}
+                {hasDiscount ? (
+                    <div>-{gameInfo["discount-amount"] * 100}%</div>
+                ) : (
+                    ""
+                )}
+                {hasDiscount ? <span>R$ {price}</span> : ""}
+                <h2 style={hasDiscount ? { marginLeft: "46%" } : {}}>
+                    R$ {hasDiscount ? discountedPrice : price}
+                </h2>
                 <button>
                     <BsCartPlus />
                     Add to cart
@@ -51,7 +72,7 @@ export default function Game() {
 
             <SimilarProductsContainter>
                 <h3>You may like these products</h3>
-                {/*!!! Insert Games Cards in here when done !!!*/}
+                {/*!!! INSERT GAMES CARDS HERE WHEN DONE !!!*/}
             </SimilarProductsContainter>
         </MainContainer>
     )
@@ -87,11 +108,39 @@ const TitleContainer = styled.div`
 
 const BuyContainer = styled.div`
     width: 100%;
-    height: 150px;
+    height: auto;
     background: #e9e9e9;
-    padding: 20px;
+    padding: 35px 20px 25px;
     position: relative;
     box-shadow: 0 0 6px 0 rgb(0 0 0 / 25%);
+
+    // Discount div
+    div {
+        top: 10px;
+        left: 0;
+        width: 35%;
+        height: 55px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: #86328a;
+        border-radius: 0 5px 5px 0;
+        font-size: 32px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    span {
+        position: absolute;
+        top: 15px;
+        left: 62%;
+
+        font-size: 16px;
+        color: gray;
+        text-decoration: line-through;
+    }
 
     h2 {
         position: relative;
@@ -101,7 +150,7 @@ const BuyContainer = styled.div`
     }
 
     button {
-        margin-top: 15px;
+        margin-top: 25px;
         width: 100%;
         height: 50px;
         border: 1px solid #96bd27;
