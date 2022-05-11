@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import Game from "./components/Game"
+import Header from "./components/Header"
 
 import GlobalStyle from "./components/Normalize"
 import UserContext from "./contexts/UserContext"
@@ -20,9 +20,8 @@ export default function App() {
         <UserContext.Provider value={totalInfo}>
             <BrowserRouter>
                 <GlobalStyle />
-                <Routes>
-                    <Route path="/game/:idGame" element={<Game />} />
-                </Routes>
+                <Header />
+                <Routes></Routes>
             </BrowserRouter>
         </UserContext.Provider>
     )
