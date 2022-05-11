@@ -39,6 +39,7 @@ export default function Game() {
     }, [])
 
     return (
+        // !!! ADD HEADER WHEN DONE !!!
         <MainContainer>
             <CoverCarousel>
                 <img src={gameInfo.images?.cover}></img>
