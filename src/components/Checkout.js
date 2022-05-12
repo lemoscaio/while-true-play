@@ -24,7 +24,6 @@ export default function Checkout() {
 
     function buyGames(e) {
         e.preventDefault()
-        console.log(gamesInCartID)
 
         if (!token) {
             navigator("/sign-in")
