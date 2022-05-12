@@ -10,9 +10,42 @@ import UserContext from "../contexts/UserContext"
 export default function Checkout() {
     const { userInfo } = useContext(UserContext)
     const { email, token, gamesInCart } = userInfo
+    const navigator = useNavigate()
+
+    const URL = `${process.env.REACT_APP_API_URL}/checkout`
 
     let totalPrice = 0
     let fixedPrice
+
+    function buyGames(e) {
+        e.preventDefault()
+
+        if (!token) {
+            navigator("/sign-in")
+        } else {
+            const userBody = {
+                games: gamesInCart,
+                email,
+            }
+
+            const userConfig = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+
+            const promise = axios.post(URL, userBody, userConfig)
+
+            promise.then((response) => {
+                alert("Games bought and added into your account.")
+                navigator("/")
+            })
+            promise.catch((e) => {
+                alert("Something went wrong.")
+                console.log(e)
+            })
+        }
+    }
 
     return (
         <>
@@ -70,7 +103,7 @@ export default function Checkout() {
                 </OrderContainer>
 
                 <PaymentContainer>
-                    <form onSubmit="">
+                    <form onSubmit={buyGames}>
                         <ConfirmPayment>
                             <input required type="checkbox" />
                             <h5>
