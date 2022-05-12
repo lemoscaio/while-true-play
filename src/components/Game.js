@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { useState, useContext, useEffect } from "react"
-import { BsCartPlus } from "react-icons/bs"
+import { BsCartPlus, BsFillCartCheckFill } from "react-icons/bs"
 import "react-slideshow-image/dist/styles.css"
 import { Slide } from "react-slideshow-image"
 
@@ -15,14 +15,16 @@ export default function Game() {
     const URL = `${process.env.REACT_APP_API_URL}/games/${idGame}`
 
     const { userInfo, setUserInfo } = useContext(UserContext)
-    const { name, email, image, games, token } = userInfo
+    const { gamesInCart } = userInfo
 
+    const [alreadyInCart, setAlreadyInCart] = useState(false)
     const [gameInfo, setGameInfo] = useState({})
+
+    const navigator = useNavigate()
+
     let price
     let discountedPrice
-
     const hasDiscount = gameInfo["has-discount"]
-
     if (hasDiscount) {
         discountedPrice =
             gameInfo?.price - gameInfo?.price * gameInfo["discount-amount"]
@@ -36,6 +38,9 @@ export default function Game() {
         const promise = axios.get(URL)
         promise.then((response) => {
             setGameInfo(response.data)
+            if (gamesInCart.includes(response.data.id)) {
+                setAlreadyInCart(true)
+            }
         })
         promise.catch((e) => {
             console.log(e)
@@ -47,6 +52,18 @@ export default function Game() {
 
     if (carouselImages) {
         Array.from(carouselImages)
+    }
+
+    function addToCart(id) {
+        const otherGamesInCart = userInfo.gamesInCart
+        const newGame = [id]
+        const totalGames = otherGamesInCart.concat(newGame)
+        setUserInfo({ ...userInfo, gamesInCart: totalGames })
+        setAlreadyInCart(true)
+    }
+
+    function navigateToCheckout() {
+        navigator("/checkout")
     }
 
     return (
@@ -88,11 +105,22 @@ export default function Game() {
                     <h2 style={hasDiscount ? { marginLeft: "46%" } : {}}>
                         R$ {hasDiscount ? discountedPrice : price}
                     </h2>
-                    {/*!!! ADD FUNCTIONALITY TO BUTTON !!!!*/}
-                    <button>
-                        <BsCartPlus />
-                        Add to cart
-                    </button>
+
+                    {alreadyInCart ? (
+                        <button onClick={navigateToCheckout}>
+                            <BsFillCartCheckFill />
+                            Check out now
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => {
+                                addToCart(gameInfo.id)
+                            }}
+                        >
+                            <BsCartPlus />
+                            Add to cart
+                        </button>
+                    )}
                 </BuyContainer>
 
                 <DescriptionContainer>
