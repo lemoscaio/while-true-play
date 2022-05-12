@@ -38,8 +38,10 @@ export default function Game() {
         const promise = axios.get(URL)
         promise.then((response) => {
             setGameInfo(response.data)
-            if (gamesInCart.includes(response.data.id)) {
-                setAlreadyInCart(true)
+            for (let i = 0; i < gamesInCart.length; i++) {
+                if (gamesInCart[i].id == response.data.id) {
+                    setAlreadyInCart(true)
+                }
             }
         })
         promise.catch((e) => {
@@ -54,9 +56,9 @@ export default function Game() {
         Array.from(carouselImages)
     }
 
-    function addToCart(id) {
+    function addToCart() {
         const otherGamesInCart = userInfo.gamesInCart
-        const newGame = [id]
+        const newGame = gameInfo
         const totalGames = otherGamesInCart.concat(newGame)
         setUserInfo({ ...userInfo, gamesInCart: totalGames })
         setAlreadyInCart(true)
@@ -114,7 +116,7 @@ export default function Game() {
                     ) : (
                         <button
                             onClick={() => {
-                                addToCart(gameInfo.id)
+                                addToCart()
                             }}
                         >
                             <BsCartPlus />

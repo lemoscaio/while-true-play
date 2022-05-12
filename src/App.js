@@ -6,6 +6,7 @@ import Header from "./components/Header"
 import Game from "./components/Game"
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
+import Checkout from "./components/Checkout"
 
 import GlobalStyle from "./components/Normalize"
 import { theme } from "./styles/theme"
@@ -35,6 +36,7 @@ export default function App() {
                         <Route path="/game/:idGame" element={<Game />} />
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/sign-in" element={<SignIn />} />
+                        <Route path="/checkout" element={<Checkout />} />
                     </Routes>
                 </BrowserRouter>
             </UserContext.Provider>

@@ -40,7 +40,7 @@ export default function SignUp() {
             console.log(response.data)
             const { token } = response.data
             const { name, email, image, games } = response.data.user
-            setUserInfo({ name, email, image, games, token })
+            setUserInfo({ ...userInfo, name, email, image, games, token })
             setDisabled(false)
             navigator("/")
         })
