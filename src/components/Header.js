@@ -96,7 +96,7 @@ export default function Header() {
                     <ProfileContainer>
                         {name ? (
                             <Profile>
-                                {image ? <img src={image} /> : ""}
+                                {image ? <img src={image} /> : <img src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg" />}
                                 <span>{name}</span>
                             </Profile>
                         ) : (
