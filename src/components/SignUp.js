@@ -8,7 +8,7 @@ import StoreLogo from "./../assets/logo.png"
 import UserContext from "../contexts/UserContext"
 
 export default function SignUp() {
-    const URL = "http://localhost:5000/sign-up"
+    const URL = `${process.env.REACT_APP_API_URL}/sign-up`
 
     const { userInfo, setUserInfo } = useContext(UserContext)
 
