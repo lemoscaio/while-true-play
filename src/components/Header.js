@@ -11,8 +11,8 @@ import StoreLogo from "./../assets/logo.png"
 import UserContext from "../contexts/UserContext"
 
 export default function Header() {
-    const { userInfo, setUserInfo } = useContext(UserContext)
-    const { name, image, token } = userInfo
+    const { userInfo } = useContext(UserContext)
+    const { name, image } = userInfo
     const [menu, setMenu] = useState(false)
     const [search, setSearch] = useState(false)
     const [searchParams, setSearchParams] = useState("")

@@ -15,6 +15,8 @@ export default function Game() {
     const URL = `${process.env.REACT_APP_API_URL}/games/${idGame}`
 
     const { userInfo, setUserInfo } = useContext(UserContext)
+    const { name, email, image, games, token } = userInfo
+
     const [gameInfo, setGameInfo] = useState({})
     let price
     let discountedPrice

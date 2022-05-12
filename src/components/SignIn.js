@@ -35,8 +35,10 @@ export default function SignUp() {
             setDisabled(false)
         })
 
-        promise.then(() => {
+        promise.then((response) => {
             alert("Sucesso ao logar!")
+            const { name, email, image, games, token } = response.data
+            setUserInfo({ name, email, image, games, token })
             setDisabled(false)
             navigator("/")
         })
