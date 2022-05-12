@@ -194,7 +194,7 @@ const SearchContainer = styled.header`
 
 const NavMenu = styled.div`
     width: 100vw;
-    height: 100vh
+    height: 100vh;
     position: fixed;
     top: 50px;
     background: #1a1a1a;
