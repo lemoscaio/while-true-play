@@ -10,7 +10,8 @@ import SignIn from "./components/SignIn"
 import GlobalStyle from "./components/Normalize"
 import { theme } from "./styles/theme"
 import UserContext from "./contexts/UserContext"
-import BrowseGamesPage from "./components/BrowseGamesPage/BrowseGamesPage"
+import BrowseGamesPage from "./pages/BrowseGamesPage"
+import MainPage from "./pages/MainPage"
 
 export default function App() {
     const [userInfo, setUserInfo] = React.useState({
@@ -30,7 +31,8 @@ export default function App() {
                 <BrowserRouter>
                     <GlobalStyle />
                     <Routes>
-                        <Route path="/" element={<BrowseGamesPage />} />
+                        <Route path="/" element={<MainPage />} />
+                        <Route path="/games" element={<BrowseGamesPage />} />
                         {/* <Route path="/" element={<Menu />} /> */}
                         <Route path="/game/:idGame" element={<Game />} />
                         <Route path="/sign-up" element={<SignUp />} />

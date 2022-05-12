@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 
-import * as S from "./../../styles/styles"
-import SearchBar from "./SearchBar.js"
-import LabelSectionTitle from "./LabelSectionTitle"
-import GamesContainer from "./GamesContainer"
-import Header from "../Header"
+import * as S from "../styles/styles"
+import SearchBar from "../components/BrowseGamesPage/SearchBar.js"
+import LabelSectionTitle from "../components/BrowseGamesPage/LabelSectionTitle"
+import GamesContainer from "../components/BrowseGamesPage/GamesContainer"
+import Header from "../components/Header"
 
 export default function BrowseGamesPage() {
     const [games, setGames] = useState(() => {
