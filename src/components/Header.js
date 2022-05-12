@@ -6,6 +6,7 @@ import { TiShoppingCart } from "react-icons/ti"
 import { BiSearchAlt2 } from "react-icons/bi"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import axios from "axios"
+import { useState, useContext, useEffect } from "react"
 
 import StoreLogo from "./../assets/logo.png"
 import UserContext from "../contexts/UserContext"
