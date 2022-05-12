@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Container = styled.main`
     width: 100%;
     height: 100%;
+    margin-top: ${({ theme }) => theme.spacing.headerHeight};
     background-color: ${({ theme }) => theme.colors.pageBackgroundColor};
 `
 
@@ -15,7 +16,7 @@ export const BrowseGamesPage = styled.section`
 export const SearchBar = styled.div`
     width: 100%;
 
-    margin: 0 auto ;
+    margin: 0 auto;
     padding: 5px 10px;
 
     background-color: ${({ theme }) => theme.colors.inputBackground};
@@ -50,7 +51,6 @@ export const GamesContainer = styled.section`
 
     width: 100%;
     margin: 20px auto 0;
-    /* padding: 0 0 20px 0; */
 `
 
 export const GameCard = styled.article`
@@ -83,6 +83,7 @@ export const GameTitle = styled.h5`
     margin: 0;
     padding: 10px 15px;
 
+    font-size: 16px;
     font-weight: 500;
 `
 

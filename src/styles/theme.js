@@ -14,4 +14,7 @@ export const theme = {
 
         gameCardBackgroundColor: "#dddddd",
     },
+    spacing: {
+        headerHeight: "50px",
+    }
 }
