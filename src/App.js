@@ -4,6 +4,7 @@ import {ThemeProvider} from "styled-components"
 
 import Header from "./components/Header"
 import Game from "./components/Game"
+import SignUp from "./components/SignUp"
 
 import GlobalStyle from "./components/Normalize"
 import {theme} from "./styles/theme"
@@ -25,11 +26,11 @@ export default function App() {
         <UserContext.Provider value={totalInfo}>
             <BrowserRouter>
                 <GlobalStyle />
-                <Header />
                 <Routes>
                 <Route path="/" element={<BrowseGamesPage />} />
                 {/* <Route path="/" element={<Menu />} /> */}
-                <Route path="/game/:idGame" element={<Game />} />
+                <Route path="/game/:idGame" element={<Game />} />  
+                <Route path="/sign-up" element={<SignUp />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
