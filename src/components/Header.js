@@ -127,6 +127,8 @@ const Nav = styled.header`
     align-items: center;
     justify-content: space-around;
     background: #1a1a1a;
+    top: 0;
+    z-index: 2;
 
     font-size: 12px;
     color: #a6a6a6;

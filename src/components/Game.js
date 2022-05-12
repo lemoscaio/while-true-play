@@ -39,7 +39,6 @@ export default function Game() {
     }, [])
 
     return (
-        // !!! ADD HEADER WHEN DONE !!!
         <MainContainer>
             <CoverCarousel>
                 <img src={gameInfo.images?.cover}></img>
@@ -83,13 +82,13 @@ export default function Game() {
 const MainContainer = styled.main`
     width: 100vw;
     height: 100vh;
-    padding: 0px 10px;
+    padding: 50px 10px;
     background: #d9d9d9;
 `
 
 const CoverCarousel = styled.section`
     position: absolute;
-    top: 0;
+    top: 50px;
     left: 0;
 
     img {
