@@ -46,7 +46,7 @@ export default function SignUp() {
         promise.then(() => {
             alert("Sucesso ao criar a conta!")
             setDisabled(false)
-            navigator("/")
+            navigator("/sign-in")
         })
     }
 
