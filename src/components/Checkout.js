@@ -17,14 +17,20 @@ export default function Checkout() {
     let totalPrice = 0
     let fixedPrice
 
+    let gamesInCartID = []
+    for (let i = 0; i < gamesInCart.length; i++) {
+        gamesInCartID.push(gamesInCart[i].id)
+    }
+
     function buyGames(e) {
         e.preventDefault()
+        console.log(gamesInCartID)
 
         if (!token) {
             navigator("/sign-in")
         } else {
             const userBody = {
-                games: gamesInCart,
+                games: gamesInCartID,
                 email,
             }
 
