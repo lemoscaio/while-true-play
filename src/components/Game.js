@@ -12,7 +12,7 @@ import UserContext from "../contexts/UserContext"
 
 export default function Game() {
     const { idGame } = useParams()
-    const URL = `http://localhost:5000/games/${idGame}`
+    const URL = `${process.env.REACT_APP_API_URL}/games/${idGame}`
 
     const { userInfo, setUserInfo } = useContext(UserContext)
     const [gameInfo, setGameInfo] = useState({})
