@@ -9,12 +9,13 @@ export const Container = styled.main`
 export const BrowseGamesPage = styled.section`
     width: 90%;
     margin: 0 auto;
+    padding: 15px 0 20px;
 `
 
 export const SearchBar = styled.div`
     width: 100%;
 
-    margin: 0px auto;
+    margin: 0 auto ;
     padding: 5px 10px;
 
     background-color: ${({ theme }) => theme.colors.inputBackground};
@@ -24,17 +25,20 @@ export const SearchBar = styled.div`
 `
 export const SearchBarInput = styled.input`
     font-family: ${({ theme }) => theme.fonts.mainFont};
+    font-size: 14px;
+
+    margin-left: 5px;
 
     background-color: ${({ theme }) => theme.colors.inputBackground};
 
     border: none;
 `
 
-export const Label = styled.h2`
+export const Label = styled.h3`
     width: 100%;
 
-    margin: 0 auto;
-    padding: 0 0 20px 0;
+    margin: 15px auto;
+    padding: 0 0 15px 0;
 
     border-bottom: 1px solid ${({ theme }) => theme.colors.inputBorderColor};
 `
@@ -45,10 +49,15 @@ export const GamesContainer = styled.section`
     gap: 15px;
 
     width: 100%;
-    margin: 20px auto;
+    margin: 20px auto 0;
+    /* padding: 0 0 20px 0; */
 `
 
 export const GameCard = styled.article`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     width: 100%;
     height: 230px;
     background-color: ${({ theme }) => theme.colors.gameCardBackgroundColor};
@@ -65,7 +74,6 @@ export const GameCard = styled.article`
     & img {
         height: 45%;
         width: 100%;
-        height: 110px;
         object-fit: cover;
         border-radius: 5px 5px 0 0;
     }
@@ -83,7 +91,7 @@ export const ValuesContainer = styled.div`
     justify-content: flex-end;
     align-items: center;
 
-    margin: 15px 15px 25px;
+    margin: 15px;
     gap: 5px;
 
     font-weight: 600;

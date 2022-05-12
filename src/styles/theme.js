@@ -6,7 +6,7 @@ export const theme = {
     colors: {
         pageBackgroundColor: "#cccccc",
 
-        inputBackground: "#cccccc",
+        inputBackground: "#dddddd",
         inputBorderColor: "#bbbbbb",
 
         discountLabelFontColor: "#ffffff",
