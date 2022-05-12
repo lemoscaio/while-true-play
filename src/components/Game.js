@@ -71,18 +71,18 @@ export default function Game() {
                 <h4>{gameInfo.description}</h4>
             </DescriptionContainer>
 
-            <SimilarProductsContainter>
+            <SimilarProductsContainer>
                 <h3>You may like these products</h3>
                 {/*!!! INSERT GAMES CARDS HERE WHEN DONE !!!*/}
-            </SimilarProductsContainter>
+            </SimilarProductsContainer>
         </MainContainer>
     )
 }
 
 const MainContainer = styled.main`
-    width: 100vw;
-    height: 100vh;
-    padding: 50px 10px;
+    width: 100%;
+    height: 100%;
+    padding: 50px 10px 0px 10px;
     background: #d9d9d9;
 `
 
@@ -190,7 +190,7 @@ const DescriptionContainer = styled.div`
         line-height: 17px;
     }
 `
-const SimilarProductsContainter = styled.div`
+const SimilarProductsContainer = styled.div`
     width: 100%;
     margin-top: 40px;
 
