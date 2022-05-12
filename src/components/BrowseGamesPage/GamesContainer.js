@@ -9,9 +9,13 @@ export default function GamesContainer(props) {
 
     return (
         <S.GamesContainer>
-            {games?.map((game) => {
-                return <GameCard game={game} />
-            })}
+            {games ? (
+                games?.map((game) => {
+                    return <GameCard key={game.id} game={game} />
+                })
+            ) : (
+                <>Loading...</>
+            )}
         </S.GamesContainer>
     )
 }

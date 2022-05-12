@@ -1,8 +1,10 @@
 import styled from "styled-components"
+import { IoMdClose } from "react-icons/io"
+import { BiSearchAlt2 } from "react-icons/bi"
 
 export const Container = styled.main`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     margin-top: ${({ theme }) => theme.spacing.headerHeight};
     background-color: ${({ theme }) => theme.colors.pageBackgroundColor};
 `
@@ -14,6 +16,8 @@ export const BrowseGamesPage = styled.section`
 `
 
 export const SearchBar = styled.div`
+    position: relative;
+
     width: 100%;
 
     margin: 0 auto;
@@ -33,6 +37,26 @@ export const SearchBarInput = styled.input`
     background-color: ${({ theme }) => theme.colors.inputBackground};
 
     border: none;
+
+    &:focus {
+        outline: none;
+    }
+`
+
+export const MagnifyingGlassIcon = styled(BiSearchAlt2)`
+    position: relative;
+    transform: translateY(+20%);
+    
+    cursor: pointer;
+`
+
+export const CleanIcon = styled(IoMdClose)`
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+
+    cursor: pointer;
 `
 
 export const Label = styled.h3`

@@ -1,14 +1,22 @@
 import React from "react"
 import * as S from "../../styles/styles"
-import { BiSearchAlt2 } from "react-icons/bi"
 
-export default function SearchBar() {
+export default function SearchBar(props) {
+    const { gameQuery, setGameQuery } = props
     return (
         <>
             <S.SearchBar>
                 <label>
-                    <BiSearchAlt2 />
-                    <S.SearchBarInput type="text" placeholder="Search store" />
+                    <S.MagnifyingGlassIcon />
+                    <S.SearchBarInput
+                        type="text"
+                        value={gameQuery}
+                        placeholder="Search store"
+                        onChange={(e) => setGameQuery(e.target.value)}
+                    />
+                    {gameQuery && (
+                        <S.CleanIcon onClick={() => setGameQuery("")} />
+                    )}
                 </label>
             </S.SearchBar>
         </>
