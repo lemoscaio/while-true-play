@@ -4,12 +4,15 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { useState, useContext, useEffect } from "react"
 import { BsCartPlus } from "react-icons/bs"
+import "react-slideshow-image/dist/styles.css"
+import { Slide } from "react-slideshow-image"
 
+import Header from "./Header"
 import UserContext from "../contexts/UserContext"
 
 export default function Game() {
     const { idGame } = useParams()
-    const URL = `http://localhost:5000/games/${idGame}`
+    const URL = `${process.env.REACT_APP_API_URL}/games/${idGame}`
 
     const { userInfo, setUserInfo } = useContext(UserContext)
     const [gameInfo, setGameInfo] = useState({})
@@ -30,7 +33,6 @@ export default function Game() {
     useEffect(() => {
         const promise = axios.get(URL)
         promise.then((response) => {
-            console.log(response.data)
             setGameInfo(response.data)
         })
         promise.catch((e) => {
@@ -38,44 +40,70 @@ export default function Game() {
         })
     }, [])
 
+    const carouselCover = gameInfo?.images?.cover
+    const carouselImages = gameInfo?.images?.screenshots
+
+    if (carouselImages) {
+        Array.from(carouselImages)
+    }
+
     return (
-        <MainContainer>
-            <CoverCarousel>
-                <img src={gameInfo.images?.cover}></img>
-            </CoverCarousel>
+        <>
+            <Header />
+            <MainContainer>
+                <CoverCarousel>
+                    <Slide easing="ease">
+                        <div
+                            style={{ backgroundImage: `url(${carouselCover})` }}
+                        ></div>
+                        {carouselImages
+                            ? carouselImages?.map((image, key) => {
+                                  return (
+                                      <div
+                                          style={{
+                                              backgroundImage: `url(${image})`,
+                                          }}
+                                          key={key}
+                                      ></div>
+                                  )
+                              })
+                            : ""}
+                    </Slide>
+                </CoverCarousel>
 
-            <TitleContainer>
-                <h1>{gameInfo.title}</h1>
-            </TitleContainer>
+                <TitleContainer>
+                    <h1>{gameInfo.title}</h1>
+                </TitleContainer>
 
-            <BuyContainer>
-                {/*!!! FIX DISCOUNT MARGIN ON DIFFERENT SCREENS !!! */}
-                {hasDiscount ? (
-                    <div>-{gameInfo["discount-amount"] * 100}%</div>
-                ) : (
-                    ""
-                )}
-                {hasDiscount ? <span>R$ {price}</span> : ""}
-                <h2 style={hasDiscount ? { marginLeft: "46%" } : {}}>
-                    R$ {hasDiscount ? discountedPrice : price}
-                </h2>
-                {/*!!! ADD FUNCTIONALITY TO BUTTON !!!!*/}
-                <button>
-                    <BsCartPlus />
-                    Add to cart
-                </button>
-            </BuyContainer>
+                <BuyContainer>
+                    {/*!!! FIX DISCOUNT MARGIN ON DIFFERENT SCREENS !!! */}
+                    {hasDiscount ? (
+                        <div>-{gameInfo["discount-amount"] * 100}%</div>
+                    ) : (
+                        ""
+                    )}
+                    {hasDiscount ? <span>R$ {price}</span> : ""}
+                    <h2 style={hasDiscount ? { marginLeft: "46%" } : {}}>
+                        R$ {hasDiscount ? discountedPrice : price}
+                    </h2>
+                    {/*!!! ADD FUNCTIONALITY TO BUTTON !!!!*/}
+                    <button>
+                        <BsCartPlus />
+                        Add to cart
+                    </button>
+                </BuyContainer>
 
-            <DescriptionContainer>
-                <h3>Description</h3>
-                <h4>{gameInfo.description}</h4>
-            </DescriptionContainer>
+                <DescriptionContainer>
+                    <h3>Description</h3>
+                    <h4>{gameInfo.description}</h4>
+                </DescriptionContainer>
 
-            <SimilarProductsContainer>
-                <h3>You may like these products</h3>
-                {/*!!! INSERT GAMES CARDS HERE WHEN DONE !!!*/}
-            </SimilarProductsContainer>
-        </MainContainer>
+                <SimilarProductsContainer>
+                    <h3>You may like these products</h3>
+                    {/*!!! INSERT GAMES CARDS HERE WHEN DONE !!!*/}
+                </SimilarProductsContainer>
+            </MainContainer>
+        </>
     )
 }
 
@@ -91,9 +119,10 @@ const CoverCarousel = styled.section`
     top: 50px;
     left: 0;
 
-    img {
+    div {
         width: 100vw;
         height: 210px;
+        background-size: cover;
     }
 `
 
