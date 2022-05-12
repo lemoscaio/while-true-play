@@ -45,7 +45,6 @@ export default function Game() {
 
     if (carouselImages) {
         Array.from(carouselImages)
-        console.log(carouselImages)
     }
 
     return (
