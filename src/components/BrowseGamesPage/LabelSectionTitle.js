@@ -6,7 +6,9 @@ export default function LabelSectionTitle(props) {
 
     return (
         <>
-            <S.Label>PC games / All Games ({gamesAmount})</S.Label>
+            <S.Label>
+                PC games / All Games {gamesAmount && `(${gamesAmount})`}
+            </S.Label>
         </>
     )
 }
