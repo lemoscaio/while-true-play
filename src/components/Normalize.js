@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 body {
-  font-family: 'Lexend Deca', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 html {
