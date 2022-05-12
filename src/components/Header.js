@@ -20,7 +20,7 @@ export default function Header() {
 
     function searchGame() {
         const promise = axios.get(
-            `http://localhost:5000/games?q=${searchParams}`
+            `${process.env.REACT_APP_API_URL}/games?q=${searchParams}`
         )
         promise.then((response) => {
             navigator(`/games?q=${searchParams}`)
