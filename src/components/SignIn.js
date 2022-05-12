@@ -8,14 +8,12 @@ import StoreLogo from "./../assets/logo.png"
 import UserContext from "../contexts/UserContext"
 
 export default function SignUp() {
-    const URL = "http://localhost:5000/sign-up"
+    const URL = "http://localhost:5000/sign-in"
 
     const { userInfo, setUserInfo } = useContext(UserContext)
 
-    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [disabled, setDisabled] = useState(false)
 
     const navigator = useNavigate()
@@ -23,17 +21,11 @@ export default function SignUp() {
     function blockForValidation(e) {
         e.preventDefault()
         setDisabled(true)
-        if (password !== passwordConfirmation) {
-            alert("As senhas devem ser iguais! Tente novamente.")
-            setDisabled(false)
-        } else {
-            validateRegister()
-        }
+        validateLogin()
     }
 
-    function validateRegister() {
+    function validateLogin() {
         const promise = axios.post(URL, {
-            name,
             email,
             password,
         })
@@ -44,7 +36,7 @@ export default function SignUp() {
         })
 
         promise.then(() => {
-            alert("Sucesso ao criar a conta!")
+            alert("Sucesso ao logar!")
             setDisabled(false)
             navigator("/")
         })
@@ -52,21 +44,15 @@ export default function SignUp() {
 
     return (
         <MainContainer>
-            <SignUpHeader>
+            <SignInHeader>
                 <img src={StoreLogo} alt="Logo da loja While True Play"></img>
-            </SignUpHeader>
+            </SignInHeader>
 
             <form
                 onSubmit={blockForValidation}
                 style={disabled ? { opacity: "0.5" } : {}}
                 disabled={disabled ? "disabled" : ""}
             >
-                <input
-                    required
-                    type="text"
-                    placeholder="Username"
-                    onChange={(e) => setName(e.target.value)}
-                ></input>
                 <input
                     required
                     type="email"
@@ -79,18 +65,10 @@ export default function SignUp() {
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}
                 ></input>
-                <input
-                    required
-                    type="password"
-                    placeholder="Confirm password"
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
-                ></input>
-                <button type="submit">Sign Up</button>
+                <button type="submit">Sign In</button>
             </form>
 
-            <Link to="/sign-in">
-                Already registered? Sign in to your account.
-            </Link>
+            <Link to="/sign-up">Not yet registered? Create a new account.</Link>
         </MainContainer>
     )
 }
@@ -135,7 +113,7 @@ const MainContainer = styled.main`
     }
 `
 
-const SignUpHeader = styled.div`
+const SignInHeader = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
