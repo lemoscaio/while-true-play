@@ -96,7 +96,7 @@ export default function Header() {
                     <ProfileContainer>
                         {name ? (
                             <Profile>
-                                <img src={image} />
+                                {image ? <img src={image} /> : ""}
                                 <span>{name}</span>
                             </Profile>
                         ) : (
