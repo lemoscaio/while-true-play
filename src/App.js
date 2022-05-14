@@ -2,7 +2,6 @@ import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { ThemeProvider } from "styled-components"
 
-import Header from "./components/Header"
 import Game from "./components/Game"
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"

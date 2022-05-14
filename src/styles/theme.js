@@ -13,8 +13,11 @@ export const theme = {
         discountLabelBackground: "purple",
 
         gameCardBackgroundColor: "#dddddd",
+
+        buttonBackgroundColor: "linear-gradient(-180deg,#9fbf00,#80ab00 91%);",
     },
     spacing: {
         headerHeight: "50px",
-    }
+        headerHeightOnHover: "50px",
+    },
 }

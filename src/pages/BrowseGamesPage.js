@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 
 import * as S from "../styles/styles"
-import SearchBar from "../components/BrowseGamesPage/SearchBar.js"
-import LabelSectionTitle from "../components/BrowseGamesPage/LabelSectionTitle"
-import GamesContainer from "../components/BrowseGamesPage/GamesContainer"
+import SearchBar from "../components/SearchBar.js"
+import LabelSectionTitle from "../components/LabelSectionTitle"
+import GamesContainer from "../components/GamesContainer"
 import Header from "../components/Header"
 
 export default function BrowseGamesPage() {
@@ -37,7 +37,9 @@ export default function BrowseGamesPage() {
                         gameQuery={gameQuery}
                         setGameQuery={(value) => setGameQuery(value)}
                     />
-                    <LabelSectionTitle gamesAmount={games?.length} />
+                    <LabelSectionTitle>
+                        PC games / All Games {games && `(${games?.length})`}
+                    </LabelSectionTitle>
                     <GamesContainer games={games} />
                 </S.BrowseGamesPage>
             </S.Container>

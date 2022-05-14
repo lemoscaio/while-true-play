@@ -96,7 +96,11 @@ export default function Header() {
                     <ProfileContainer>
                         {name ? (
                             <Profile>
-                                {image ? <img src={image} /> : <img src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg" />}
+                                {image ? (
+                                    <img src={image} />
+                                ) : (
+                                    <img src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg" />
+                                )}
                                 <span>{name}</span>
                             </Profile>
                         ) : (
@@ -120,7 +124,7 @@ export default function Header() {
 
 const Nav = styled.header`
     width: 100vw;
-    height: 50px;
+    height: ${({ theme }) => theme.spacing.headerHeight};
 
     position: fixed;
     display: flex;
@@ -128,10 +132,12 @@ const Nav = styled.header`
     justify-content: space-around;
     background: #1a1a1a;
     top: 0;
-    z-index: 2;
+    z-index: 10;
 
     font-size: 12px;
     color: #a6a6a6;
+
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 
     a:focus {
         outline: none;
@@ -162,16 +168,20 @@ const Nav = styled.header`
 `
 const SearchContainer = styled.header`
     width: 100vw;
-    height: 50px;
+    height: ${({ theme }) => theme.spacing.headerHeight};
 
     position: fixed;
+    top: 0;
     display: flex;
     align-items: center;
     background: #1a1a1a;
+    z-index: 10;
 
     font-size: 12px;
     color: #a6a6a6;
     padding: 5px 5px 5px 5px;
+
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 
     input {
         margin-left: 10px;
@@ -188,7 +198,6 @@ const SearchContainer = styled.header`
     svg {
         margin-left: 5px;
         font-size: 25px;
-        color: white;
     }
 `
 
@@ -198,7 +207,7 @@ const NavMenu = styled.div`
     position: fixed;
     top: 50px;
     background: #1a1a1a;
-    z-index: 2;
+    z-index: 10;
 
     padding: 10px 50px;
     opacity: 0.99;
