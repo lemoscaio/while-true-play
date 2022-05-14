@@ -6,6 +6,7 @@ import SearchBar from "../components/SearchBar.js"
 import LabelSectionTitle from "../components/LabelSectionTitle"
 import GamesContainer from "../components/GamesContainer"
 import Header from "../components/Header"
+import Footer from "./../components/Footer.js"
 
 export default function BrowseGamesPage() {
     const [games, setGames] = useState(() => {
@@ -43,6 +44,7 @@ export default function BrowseGamesPage() {
                     <GamesContainer games={games} />
                 </S.BrowseGamesPage>
             </S.Container>
+            <Footer />
         </>
     )
 }

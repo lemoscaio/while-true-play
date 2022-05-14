@@ -146,9 +146,8 @@ const Nav = styled.header`
     }
 
     img {
-        width: 80px;
         height: 45px;
-        margin-top: 7px;
+        margin-top: 10px;
         object-fit: cover;
     }
 

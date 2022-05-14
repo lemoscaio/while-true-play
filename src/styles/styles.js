@@ -50,6 +50,7 @@ export const GameInfoContainer = styled.div`
 
     padding: 15px;
 `
+
 export const HighlightGameTitle = styled.h5`
     margin: 0;
     padding: 0;
@@ -181,8 +182,9 @@ export const SearchBar = styled.div`
     border: 2px solid ${({ theme }) => theme.colors.inputBorderColor};
     border-radius: 25px;
 `
+
 export const SearchBarInput = styled.input`
-    font-family: ${({ theme }) => theme.fonts.mainFont};
+    font-family: ${({ theme }) => theme.colors.mainFont};
     font-size: 14px;
 
     margin-left: 5px;
@@ -305,3 +307,60 @@ export const OriginalPrice = styled.p`
 `
 
 export const DiscountPrice = styled(CarouselPrice)``
+
+// FOOTER
+
+export const Footer = styled.footer`
+    min-height: 50px;
+    color: ${({ theme }) => theme.colors.footerFontColor};
+    background-color: ${({ theme }) => theme.colors.footerBackgroundColor};
+
+    padding: 15px 20px;
+
+    font-size: 14px;
+
+    box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.2);
+
+    & img {
+        width: 130px;
+        margin: 0;
+        padding: 0;
+        /* transform: translateY(-75%); */
+    }
+
+    & a {
+        color: ${({ theme }) => theme.colors.footerFontColor};
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+
+        &:visited {
+            color: inherit;
+        }
+    }
+`
+
+export const FooterInfoContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+`
+
+export const FooterInfo = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const FooterDisclaimer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid ${({ theme }) => theme.colors.footerBorderColor};
+    & > p {
+        font-size: 12px;
+        margin: 5px 0 0 0;
+    }
+`
