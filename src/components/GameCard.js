@@ -1,7 +1,7 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 
-import * as S from "./../../styles/styles"
+import * as S from "./../styles/styles"
 
 export default function GameCard(props) {
     const { game } = props
@@ -17,22 +17,21 @@ export default function GameCard(props) {
             <div>
                 <S.GameTitle>{game.title}</S.GameTitle>
                 <S.ValuesContainer>
-                    {game["has-discount"] && (
+                    {game.hasDiscount && (
                         <S.DiscountLabel>{`-${
-                            game["discount-amount"] * 100
+                            game.discountAmount * 100
                         }%`}</S.DiscountLabel>
                     )}
                     <S.PriceContainer>
-                        {game["has-discount"] && (
+                        {game.hasDiscount && (
                             <S.OriginalPrice>
                                 {game.price.toFixed(2)}
                             </S.OriginalPrice>
                         )}
                         <S.DiscountPrice>
-                            {(
-                                game.price *
-                                (1 - game["discount-amount"])
-                            ).toFixed(2)}
+                            {(game.price * (1 - game.discountAmount)).toFixed(
+                                2
+                            )}
                         </S.DiscountPrice>
                     </S.PriceContainer>
                 </S.ValuesContainer>

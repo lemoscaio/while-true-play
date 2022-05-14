@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 
-import * as S from "./../../styles/styles"
-import SearchBar from "./SearchBar.js"
-import LabelSectionTitle from "./LabelSectionTitle"
-import GamesContainer from "./GamesContainer"
-import Header from "../Header"
+import * as S from "../styles/styles"
+import SearchBar from "../components/SearchBar.js"
+import LabelSectionTitle from "../components/LabelSectionTitle"
+import GamesContainer from "../components/GamesContainer"
+import Header from "../components/Header"
 
 export default function BrowseGamesPage() {
     const [games, setGames] = useState(() => {
@@ -37,7 +37,9 @@ export default function BrowseGamesPage() {
                         gameQuery={gameQuery}
                         setGameQuery={(value) => setGameQuery(value)}
                     />
-                    <LabelSectionTitle gamesAmount={games?.length} />
+                    <LabelSectionTitle>
+                        PC games / All Games {games && `(${games?.length})`}
+                    </LabelSectionTitle>
                     <GamesContainer games={games} />
                 </S.BrowseGamesPage>
             </S.Container>

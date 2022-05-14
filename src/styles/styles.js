@@ -1,19 +1,172 @@
 import styled from "styled-components"
-import { IoMdClose } from "react-icons/io"
+import { IoMdClose, IoMdOpen } from "react-icons/io"
 import { BiSearchAlt2 } from "react-icons/bi"
+import { BsCartPlus, BsCartCheck } from "react-icons/bs"
 
 export const Container = styled.main`
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    min-height: calc(100vh - ${({ theme }) => theme.spacing.headerHeight});
     margin-top: ${({ theme }) => theme.spacing.headerHeight};
     background-color: ${({ theme }) => theme.colors.pageBackgroundColor};
 `
 
-export const BrowseGamesPage = styled.section`
+// MAIN PAGE
+
+export const MainPage = styled.section`
     width: 90%;
+    height: 100%;
     margin: 0 auto;
     padding: 15px 0 20px;
 `
+
+export const GameHighlight = styled.article`
+    /* position: relative; */
+    height: 240px;
+    width: 100%;
+
+    background-image: url(${(props) => props.backgroundImage});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+
+    background-color: white;
+
+    color: white;
+
+    & h5,
+    & p {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+`
+
+export const GameInfoContainer = styled.div`
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding: 15px;
+`
+export const HighlightGameTitle = styled.h5`
+    margin: 0;
+    padding: 0;
+
+    font-size: 16px;
+    font-weight: 500;
+`
+
+export const GamePriceAndCartContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-top: 10px;
+`
+
+export const GamePriceContainer = styled.div`
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+`
+
+export const AddToCartButton = styled.button`
+    padding: 7px 10px 7px 14px;
+
+    background-image: ${({ theme }) => theme.colors.buttonBackgroundColor};
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+
+    font-weight: 600;
+`
+
+export const AddToCartIcon = styled(BsCartPlus)`
+    position: relative;
+    transform: translate(-30%, 10%);
+`
+
+export const CheckoutIcon = styled(BsCartCheck)`
+    position: relative;
+    transform: translate(-30%, 10%);
+`
+
+export const GamesCarousel = styled.div`
+    color: white;
+
+    height: 200px;
+
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+
+    & div {
+        height: 100%;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    & button {
+        z-index: 2 !important;
+    }
+`
+
+export const CarouselInfo = styled.div`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 10px 5px;
+
+    & div {
+        display: flex;
+        align-items: flex-end;
+    }
+`
+
+export const CarouselGameTitle = styled(HighlightGameTitle)``
+
+export const CarouselPrice = styled.p`
+    font-weight: 600;
+    margin: 5px;
+`
+
+export const BrowseGamesLink = styled.button`
+    height: 100%;
+    width: 100%;
+
+    background-color: transparent;
+
+    padding: 15px;
+
+    border: none;
+    border-top: 2px solid ${({ theme }) => theme.colors.inputBorderColor};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.inputBorderColor};
+
+    a {
+        font-weight: 700;
+        font-size: 18px;
+
+        text-decoration: none;
+
+        &:visited {
+            color: black;
+        }
+    }
+`
+
+export const OpenLinkIcon = styled(IoMdOpen)`
+    position: relative;
+    transform: translate(-30%, 15%);
+`
+
+// BROWSE GAMES PAGE
+
+export const BrowseGamesPage = styled(MainPage)``
 
 export const SearchBar = styled.div`
     position: relative;
@@ -46,7 +199,7 @@ export const SearchBarInput = styled.input`
 export const MagnifyingGlassIcon = styled(BiSearchAlt2)`
     position: relative;
     transform: translateY(+20%);
-    
+
     cursor: pointer;
 `
 
@@ -74,7 +227,7 @@ export const GamesContainer = styled.section`
     gap: 15px;
 
     width: 100%;
-    margin: 20px auto 0;
+    margin: 20px auto 30px;
 `
 
 export const GameCard = styled.article`
@@ -151,6 +304,4 @@ export const OriginalPrice = styled.p`
     text-decoration: line-through;
 `
 
-export const DiscountPrice = styled.p`
-    font-weight: 600;
-`
+export const DiscountPrice = styled(CarouselPrice)``

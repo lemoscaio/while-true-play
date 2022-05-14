@@ -1,5 +1,5 @@
 import React from "react"
-import * as S from "../../styles/styles"
+import * as S from "../styles/styles"
 
 export default function SearchBar(props) {
     const { gameQuery, setGameQuery } = props
