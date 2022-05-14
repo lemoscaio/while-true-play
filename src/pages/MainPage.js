@@ -7,6 +7,7 @@ import GameHighlight from "../components/GameHighlight.js"
 import GamesCarousel from "../components/GamesCarousel.js"
 import LabelSectionTitle from "./../components/LabelSectionTitle.js"
 import BrowseGamesLink from "./../components/BrowseGamesLink.js"
+import Footer from "./../components/Footer.js"
 import * as S from "./../styles/styles.js"
 
 export default function MainPage() {
@@ -59,6 +60,7 @@ export default function MainPage() {
                     <GamesContainer games={fourMostViewed} />
                 </S.MainPage>
             </S.Container>
+            <Footer />
         </>
     )
 }

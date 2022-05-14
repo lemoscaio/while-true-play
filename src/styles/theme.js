@@ -1,9 +1,13 @@
 export const theme = {
     fonts: {
         mainFont: "'Inter', sans-serif",
-        mainFontColor: "#000000",
     },
     colors: {
+        mainFontColor: "#000000",
+        footerFontColor: "#a6a6a6",
+
+        headerBackgroundColor: "#1a1a1a",
+        footerBackgroundColor: "#1a1a1a",
         pageBackgroundColor: "#cccccc",
 
         inputBackground: "#dddddd",
@@ -15,6 +19,8 @@ export const theme = {
         gameCardBackgroundColor: "#dddddd",
 
         buttonBackgroundColor: "linear-gradient(-180deg,#9fbf00,#80ab00 91%);",
+
+        footerBorderColor: "rgba(187, 187, 187, 0.2)",
     },
     spacing: {
         headerHeight: "50px",

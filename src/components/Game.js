@@ -9,6 +9,7 @@ import { Slide } from "react-slideshow-image"
 
 import Header from "./Header"
 import UserContext from "../contexts/UserContext"
+import Footer from "./../components/Footer.js"
 
 export default function Game() {
     const { idGame } = useParams()
@@ -135,6 +136,7 @@ export default function Game() {
                     {/*!!! INSERT GAMES CARDS HERE WHEN DONE !!!*/}
                 </SimilarProductsContainer>
             </MainContainer>
+            <Footer />
         </>
     )
 }
