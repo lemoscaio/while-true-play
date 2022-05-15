@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import * as S from "./../styles/styles.js"
 import AddToCartButton from "./AddToCartButton.js"
-import UserContext from "../contexts/UserContext"
+import { UserContext } from "../contexts/UserContext"
 
 export default function GameCarousel(props) {
     const { game } = props

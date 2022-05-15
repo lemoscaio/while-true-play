@@ -1,38 +1,35 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import axios from "axios"
 
 import * as S from "../styles/styles"
 import SearchBar from "../components/SearchBar.js"
 import LabelSectionTitle from "../components/LabelSectionTitle"
 import GamesContainer from "../components/GamesContainer"
-import Header from "../components/Header"
 import Footer from "./../components/Footer.js"
+import { MenuContext } from "./../contexts/MenuContext.js"
 
 export default function BrowseGamesPage() {
-    const [games, setGames] = useState(() => {
-        axios
-            .get(`${process.env.REACT_APP_API_URL}/games`)
-            .then((response) => {
-                setGames(response.data)
-            })
-            .catch((error) => console.log(error))
-    })
-
+    const [games, setGames] = useState()
     const [gameQuery, setGameQuery] = useState("")
+    const [sort, setSort] = useState("desc:amountSold")
+    const { menuIsOpen } = useContext(MenuContext)
 
     useEffect(() => {
+        const queryParameter = gameQuery ? `q=${gameQuery}&` : ""
+        const sortParameter = sort ? `order=${sort}&` : ""
         axios
-            .get(`${process.env.REACT_APP_API_URL}/games?q=${gameQuery}`)
+            .get(
+                `${process.env.REACT_APP_API_URL}/games?${queryParameter}${sortParameter}`
+            )
             .then((response) => {
                 setGames(response.data)
             })
             .catch((error) => console.log(error))
-    }, [gameQuery])
+    }, [gameQuery, sort])
 
     return (
         <>
-            <Header />
-            <S.Container>
+            <S.Container menuIsOpen={menuIsOpen}>
                 <S.BrowseGamesPage>
                     <SearchBar
                         gameQuery={gameQuery}
