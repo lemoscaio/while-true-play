@@ -21,6 +21,16 @@ export const theme = {
         buttonBackgroundColor: "linear-gradient(-180deg,#9fbf00,#80ab00 91%);",
 
         footerBorderColor: "rgba(187, 187, 187, 0.2)",
+
+        errorMessageFontColor: "#8c11be",
+        errorMessageBackgroundColor: "white",
+        succesMessageFontColor: "#9fbf00",
+        succesMessageBackgroundColor: "transparent",
+        passwordMatchingFontColor: "white",
+
+        authPageBackgroundColor: "#612f74",
+        authButtonBackgroundColor: "#bf40bf",
+        authDisabledButtonBackgroundColor: "#9c9c9c",
     },
     spacing: {
         headerHeight: "50px",

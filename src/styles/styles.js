@@ -663,16 +663,16 @@ export const SimilarProductsContainer = styled.div`
     }
 `
 
-// SIGN-IN PAGE
+// AUTH PAGES (SIGN-IN AND SIGN-UP)
 
-export const MainContainer = styled.main`
+export const AuthContainer = styled.main`
+    position: relative;
     width: 100vw;
     height: 100vh;
-    background: #612f74;
-    padding: 50px 30px;
+    background: ${({ theme }) => theme.colors.authPageBackgroundColor};
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
 
     input {
         width: 100%;
@@ -685,21 +685,6 @@ export const MainContainer = styled.main`
         background: #d4d4d4;
     }
 
-    button {
-        width: 326px;
-        height: 46px;
-        border: none;
-        background: #bf40bf;
-        border-radius: 5px;
-        color: #ffffff;
-        font-weight: 300;
-        font-size: 20px;
-        margin-top: 15px;
-        margin-bottom: 35px;
-
-        cursor: pointer;
-    }
-
     a {
         text-decoration: none;
         color: white;
@@ -707,28 +692,95 @@ export const MainContainer = styled.main`
     }
 `
 
-export const SignInHeader = styled.div`
+export const AuthHeader = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+
     img {
+        transform: translateY(-30%);
         width: 230px;
         cursor: pointer;
     }
 `
 
-// SIGN-UP PAGES
-
-export const SignUpHeader = styled.div`
-    width: 100%;
+export const AuthForm = styled.form`
+    width: 80%;
+    margin: 0 auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
-    img {
-        width: 230px;
-        cursor: pointer;
+
+    transition: all 1s;
+`
+
+export const ErrorMessage = styled.p`
+    width: 98%;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.errorMessageFontColor};
+    background-color: ${({ theme }) =>
+        theme.colors.errorMessageBackgroundColor};
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 4px 5px;
+    margin-bottom: 10px;
+    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+`
+
+export const SuccessMessage = styled(ErrorMessage)`
+    color: ${({ theme }) => theme.colors.succesMessageFontColor};
+    background-color: ${({ theme }) =>
+        theme.colors.succesMessageBackgroundColor};
+    box-shadow: none;
+`
+
+export const PasswordMatchingMessage = styled(ErrorMessage)`
+    color: ${({ theme }) => theme.colors.passwordMatchingFontColor};
+    background-color: ${({ theme }) =>
+        theme.colors.succesMessageBackgroundColor};
+    box-shadow: none;
+`
+
+export const SubmitButton = styled.button`
+    width: 100%;
+
+    border: none;
+    border-radius: 5px;
+
+    background: ${({ theme }) => theme.colors.authButtonBackgroundColor};
+
+    color: #ffffff;
+    font-weight: 300;
+    font-size: 20px;
+
+    margin-top: 15px;
+    padding: 10px;
+    margin-bottom: 35px;
+
+    cursor: pointer;
+
+    &[disabled] {
+        background-color: ${({ theme }) =>
+            theme.colors.authDisabledButtonBackgroundColor};
+    }
+`
+
+export const BackToStoreButton = styled.button`
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    margin: 10px;
+    padding: 10px;
+
+    background: ${({ theme }) => theme.colors.authButtonBackgroundColor};
+
+    border: none;
+    border-radius: 5px;
+
+    a {
+        display: block;
     }
 `
