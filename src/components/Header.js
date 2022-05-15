@@ -1,29 +1,30 @@
 import React from "react"
-import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
-import { useContext, useState, useEffect } from "react"
-import { TiShoppingCart } from "react-icons/ti"
-import { BiSearchAlt2 } from "react-icons/bi"
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
+import { useContext, useState } from "react"
+import { AiOutlineMenu } from "react-icons/ai"
+
 import axios from "axios"
 
+import * as S from "./../styles/styles.js"
 import StoreLogo from "./../assets/logo.png"
-import UserContext from "../contexts/UserContext"
+import genericProfileImage from "./../assets/userGenericProfile.jpg"
+import { UserContext } from "../contexts/UserContext"
+import { MenuContext } from "../contexts/MenuContext"
 
 export default function Header() {
     const { userInfo } = useContext(UserContext)
+    const { menuIsOpen, setMenuIsOpen } = useContext(MenuContext)
     const { name, image } = userInfo
-    const [menu, setMenu] = useState(false)
     const [search, setSearch] = useState(false)
     const [searchParams, setSearchParams] = useState("")
-    const navigator = useNavigate()
+    const navigate = useNavigate()
 
     function searchGame() {
         const promise = axios.get(
             `${process.env.REACT_APP_API_URL}/games?q=${searchParams}`
         )
         promise.then((response) => {
-            navigator(`/games?q=${searchParams}`)
+            navigate(`/games?q=${searchParams}`)
             setSearch(false)
         })
         promise.catch((e) => {
@@ -34,8 +35,8 @@ export default function Header() {
     return (
         <>
             {search ? (
-                <SearchContainer>
-                    <BiSearchAlt2 onClick={searchGame} />
+                <S.SearchContainer>
+                    <S.SearchIcon onClick={searchGame} />
                     <input
                         type="text"
                         onChange={(e) => setSearchParams(e.target.value)}
@@ -45,19 +46,19 @@ export default function Header() {
                             }
                         }}
                     />
-                    <AiOutlineClose
+                    <S.CloseIcon
                         onClick={() => {
                             setSearchParams("")
                             setSearch(false)
                         }}
                     />
-                </SearchContainer>
+                </S.SearchContainer>
             ) : (
-                <Nav>
+                <S.Nav>
                     <Link
                         to="/"
                         onClick={() => {
-                            setMenu(false)
+                            setMenuIsOpen(false)
                         }}
                     >
                         <img
@@ -65,195 +66,62 @@ export default function Header() {
                             alt="While True Play Store logo"
                         ></img>
                     </Link>
-                    <TiShoppingCart />
-                    <BiSearchAlt2
+                    <S.CartIcon />
+                    <S.SearchIcon
                         onClick={() => {
                             setSearch(true)
-                            setMenu(false)
+                            setMenuIsOpen(false)
                         }}
                     />
-                    <div
+                    <S.MenuHeaderContainer
                         onClick={() => {
-                            setMenu(!menu)
+                            setMenuIsOpen(!menuIsOpen)
                         }}
                     >
                         <AiOutlineMenu />
                         <span>MENU</span>
-                    </div>
-                </Nav>
+                    </S.MenuHeaderContainer>
+                </S.Nav>
             )}
 
-            {menu ? (
-                <NavMenu>
+            {menuIsOpen ? (
+                <S.NavMenu>
                     <Link
                         to="/games"
                         onClick={() => {
-                            setMenu(false)
+                            setMenuIsOpen(false)
                         }}
                     >
                         <p>Browse all games</p>
                     </Link>
-                    <ProfileContainer>
+                    <S.ProfileContainer>
                         {name ? (
-                            <Profile>
+                            <S.Profile>
                                 {image ? (
-                                    <img src={image} />
+                                    <img src={image} alt="User profile" />
                                 ) : (
-                                    <img src="https://cambodiaict.net/wp-content/uploads/2019/12/computer-icons-user-profile-google-account-photos-icon-account.jpg" />
+                                    <img
+                                        src={genericProfileImage}
+                                        alt="User profile"
+                                    />
                                 )}
                                 <span>{name}</span>
-                            </Profile>
+                            </S.Profile>
                         ) : (
                             <Link
                                 to="/sign-in"
                                 onClick={() => {
-                                    setMenu(false)
+                                    setMenuIsOpen(false)
                                 }}
                             >
                                 <h1>SIGN IN</h1>
                             </Link>
                         )}
-                    </ProfileContainer>
-                </NavMenu>
+                    </S.ProfileContainer>
+                </S.NavMenu>
             ) : (
                 ""
             )}
         </>
     )
 }
-
-const Nav = styled.header`
-    width: 100vw;
-    height: ${({ theme }) => theme.spacing.headerHeight};
-
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background: #1a1a1a;
-    top: 0;
-    z-index: 10;
-
-    font-size: 12px;
-    color: #a6a6a6;
-
-    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-
-    a:focus {
-        outline: none;
-        box-shadow: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    img {
-        height: 45px;
-        margin-top: 10px;
-        object-fit: cover;
-    }
-
-    svg {
-        font-size: 22px;
-        color: #a6a6a6;
-    }
-
-    div {
-        display: flex;
-        align-items: center;
-
-        span {
-            margin-left: 7px;
-        }
-    }
-`
-const SearchContainer = styled.header`
-    width: 100vw;
-    height: ${({ theme }) => theme.spacing.headerHeight};
-
-    position: fixed;
-    top: 0;
-    display: flex;
-    align-items: center;
-    background: #1a1a1a;
-    z-index: 10;
-
-    font-size: 12px;
-    color: #a6a6a6;
-    padding: 5px 5px 5px 5px;
-
-    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-
-    input {
-        margin-left: 10px;
-        width: 80%;
-        border: none;
-        border-width: 0px;
-        outline: none;
-        background: linear-gradient(gray, gray) center bottom 1px /
-            calc(100% - 4px) 1px no-repeat;
-        color: white;
-        font-size: 16px;
-    }
-
-    svg {
-        margin-left: 5px;
-        font-size: 25px;
-    }
-`
-
-const NavMenu = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 50px;
-    background: #1a1a1a;
-    z-index: 10;
-
-    padding: 10px 50px;
-    opacity: 0.99;
-
-    p {
-        font-size: 16px;
-        color: white;
-        font-weight: 300;
-    }
-
-    a {
-        text-decoration: none;
-    }
-`
-
-const ProfileContainer = styled.section`
-    position: absolute;
-    bottom: 60px;
-    left: 0;
-
-    width: 100vw;
-    height: 80px;
-    padding: 30px 50px;
-    border-top: 1px solid gray;
-    text-align: center;
-
-    h1 {
-        font-size: 16px;
-        color: #cb96e6;
-        font-weight: 400;
-    }
-`
-
-const Profile = styled.div`
-    display: flex;
-    align-items: center;
-
-    img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: 45px;
-    }
-
-    span {
-        margin-left: 20px;
-        color: white;
-        font-weight: 300;
-    }
-`

@@ -25,5 +25,7 @@ export const theme = {
     spacing: {
         headerHeight: "50px",
         headerHeightOnHover: "50px",
+
+        footerHeight: "155px",
     },
 }

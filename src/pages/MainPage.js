@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import axios from "axios"
 
-import Header from "../components/Header.js"
 import GamesContainer from "../components/GamesContainer.js"
 import GameHighlight from "../components/GameHighlight.js"
 import GamesCarousel from "../components/GamesCarousel.js"
@@ -9,6 +8,7 @@ import LabelSectionTitle from "./../components/LabelSectionTitle.js"
 import BrowseGamesLink from "./../components/BrowseGamesLink.js"
 import Footer from "./../components/Footer.js"
 import * as S from "./../styles/styles.js"
+import { MenuContext } from "./../contexts/MenuContext.js"
 
 export default function MainPage() {
     const [fourBestSelling, setFourBestSelling] = useState(() => {
@@ -33,7 +33,6 @@ export default function MainPage() {
             })
             .catch((error) => console.log(error))
     })
-
     const [fiveMostRecent, setFiveMostRecent] = useState(() => {
         axios
             .get(
@@ -45,10 +44,11 @@ export default function MainPage() {
             .catch((error) => console.log(error))
     })
 
+    const { menuIsOpen } = useContext(MenuContext)
+
     return (
         <>
-            <Header />
-            <S.Container>
+            <S.Container menuIsOpen={menuIsOpen}>
                 <GameHighlight game={mostViewed} />
                 <S.MainPage>
                     <LabelSectionTitle>Highlights</LabelSectionTitle>

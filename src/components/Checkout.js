@@ -1,16 +1,15 @@
 import React from "react"
 import styled from "styled-components"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { useState, useContext, useEffect } from "react"
+import { useContext } from "react"
 
-import Header from "./Header"
-import UserContext from "../contexts/UserContext"
+import { UserContext } from "../contexts/UserContext"
 
 export default function Checkout() {
     const { userInfo } = useContext(UserContext)
     const { email, token, gamesInCart } = userInfo
-    const navigator = useNavigate()
+    const navigate = useNavigate()
 
     const URL = `${process.env.REACT_APP_API_URL}/checkout`
 
@@ -26,7 +25,7 @@ export default function Checkout() {
         e.preventDefault()
 
         if (!token) {
-            navigator("/sign-in")
+            navigate("/sign-in")
         } else {
             const userBody = {
                 games: gamesInCartID,
@@ -43,7 +42,7 @@ export default function Checkout() {
 
             promise.then((response) => {
                 alert("Games bought and added into your account.")
-                navigator("/")
+                navigate("/")
             })
             promise.catch((e) => {
                 alert("Something went wrong.")
@@ -54,7 +53,6 @@ export default function Checkout() {
 
     return (
         <>
-            <Header />
             <MainContainer>
                 <OrderContainer>
                     <label>YOUR ORDER</label>
@@ -63,10 +61,9 @@ export default function Checkout() {
                         const { title, price, images } = game
                         let discountedPrice
 
-                        if (game["has-discount"]) {
+                        if (game.hasDiscount) {
                             discountedPrice =
-                                game.price -
-                                game.price * game["discount-amount"]
+                                game.price - game.price * game.discountAmount
                             totalPrice += discountedPrice
                             discountedPrice = discountedPrice.toFixed(2)
                         } else {
@@ -75,10 +72,13 @@ export default function Checkout() {
                         fixedPrice = totalPrice.toFixed(2)
                         return (
                             <GameContainer>
-                                <img src={images.cover} />
+                                <img
+                                    src={images.cover}
+                                    alt={`${title} cover`}
+                                />
                                 <h6>{title}</h6>
                                 <div>
-                                    {game["has-discount"] ? (
+                                    {game.hasDiscount ? (
                                         <h5
                                             style={{
                                                 textDecoration: "line-through",
@@ -91,7 +91,7 @@ export default function Checkout() {
                                         ""
                                     )}
 
-                                    {game["has-discount"] ? (
+                                    {game.hasDiscount ? (
                                         <h5>R$ {discountedPrice}</h5>
                                     ) : (
                                         <h5>R$ {price}</h5>
