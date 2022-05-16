@@ -21,9 +21,10 @@ export default function BrowseGamesPage() {
     const { menuIsOpen } = useContext(MenuContext)
 
     useEffect(() => {
-        setIsLoading(true)
         if (queryFromMainPage) setGameQuery(queryFromMainPage)
+    }, [])
 
+    useEffect(() => {
         const queryParameter = gameQuery ? `q=${gameQuery}&` : ""
         const sortParameter = sort ? `order=${sort}&` : ""
         axios
@@ -39,9 +40,7 @@ export default function BrowseGamesPage() {
             })
     }, [gameQuery, sort])
 
-    return isLoading ? (
-        <S.LoadingContainer>Loading...</S.LoadingContainer>
-    ) : (
+    return (
         <>
             <S.Container menuIsOpen={menuIsOpen}>
                 <S.BrowseGamesPage>
@@ -52,7 +51,11 @@ export default function BrowseGamesPage() {
                     <LabelSectionTitle>
                         PC games / All Games {games && `(${games?.length})`}
                     </LabelSectionTitle>
-                    <GamesContainer games={games} />
+                    {isLoading ? (
+                        <S.LoadingContainer>Loading...</S.LoadingContainer>
+                    ) : (
+                        <GamesContainer games={games} />
+                    )}
                 </S.BrowseGamesPage>
             </S.Container>
             <Footer />
