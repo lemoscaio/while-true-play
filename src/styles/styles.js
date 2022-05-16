@@ -9,8 +9,11 @@ export const Container = styled.main`
     width: 100%;
     margin: 0 auto;
     min-height: calc(
-        100vh - ${({ theme }) => theme.spacing.headerHeight} -
-            ${({ theme }) => theme.spacing.footerHeight}
+        100vh -
+            (
+                ${({ theme }) => theme.spacing.headerHeight} +
+                    ${({ theme }) => theme.spacing.footerHeight}
+            )
     );
     margin-top: ${({ theme }) => theme.spacing.headerHeight};
     background-color: ${({ theme }) => theme.colors.pageBackgroundColor};
@@ -22,7 +25,7 @@ export const Container = styled.main`
 
 // HEADER
 
-export const Nav = styled.header`
+export const Header = styled.header`
     width: 100vw;
     height: ${({ theme }) => theme.spacing.headerHeight};
 
@@ -636,14 +639,14 @@ export const DescriptionContainer = styled.div`
     h3 {
         font-size: 16px;
         margin: 0;
-        font-color: #212121;
+        color: #212121;
         font-weight: 500;
     }
 
     p {
         margin-top: 7px;
         font-size: 14px;
-        font-color: #545454;
+        color: #545454;
         font-weight: 300;
         line-height: 17px;
     }
@@ -656,7 +659,7 @@ export const SimilarProductsContainer = styled.div`
     h3 {
         font-size: 16px;
         margin: 0;
-        font-color: #212121;
+        color: #212121;
         font-weight: 500;
         padding-bottom: 15px;
         border-bottom: 1px solid #bfbfbf;
@@ -782,5 +785,118 @@ export const BackToStoreButton = styled.button`
 
     a {
         display: block;
+    }
+`
+
+// CHECKOUT pages
+
+export const MainContainer = styled.main`
+    width: 100vw;
+    height: 100vh;
+    padding: 50px 0px 0px;
+    background: #d9d9d9;
+`
+
+export const OrderContainer = styled.section`
+    width: 100%;
+    margin-top: 20px;
+
+    label {
+        margin-left: 15px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+`
+
+export const GameContainer = styled.div`
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #e1e1e1;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 15%);
+
+    :first-of-type {
+        margin-top: 15px;
+    }
+
+    img {
+        max-width: 100px;
+        height: 60px;
+        object-fit: cover;
+    }
+
+    h6 {
+        margin: 0 20px 0 0;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    h5 {
+        margin: 0 5px;
+        font-weight: 500;
+        font-size: 12px;
+    }
+
+    div {
+        display: flex;
+        margin-right: 10px;
+    }
+`
+
+export const PaymentContainer = styled.section`
+    width: 100%;
+    margin-top: 40px;
+    padding: 10px 20px 20px;
+
+    background: #e1e1e1;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 15%);
+
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    h5 {
+        font-size: 12px;
+        margin: 0 0 0 15px;
+        font-weight: 600;
+        color: gray;
+    }
+`
+
+export const ConfirmPayment = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+export const FinishPayment = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        height: 50px;
+        border: 1px solid #96bd27;
+        border-radius: 5px;
+        border-bottom-color: #69941b;
+        border-left-color: #7fa721;
+        border-right-color: #7fa721;
+        color: #fff;
+        background-image: linear-gradient(-180deg, #9fbf00, #80ab00 91%);
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 25%);
+        font-weight: bold;
     }
 `

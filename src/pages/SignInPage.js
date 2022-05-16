@@ -16,8 +16,6 @@ export default function SignUp() {
     const token = localStorage.getItem("token")
     const URL = `${process.env.REACT_APP_API_URL}/sign-in`
 
-    const { userInfo, setUserInfo } = useContext(UserContext)
-
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -41,10 +39,8 @@ export default function SignUp() {
         })
 
         promise.then((response) => {
-            const { token } = response.data
-            const { name, email, image, games } = response.data.user
-            localStorage.setItem("token", response.data.token)
-            setUserInfo({ ...userInfo, name, email, image, games, token })
+            localStorage.setItem("token", response.data)
+
             setRequestMessage(response)
             setTimeout(() => {
                 navigate("/")
@@ -52,6 +48,8 @@ export default function SignUp() {
         })
 
         promise.catch((error) => {
+            console.log(error)
+
             setRequestMessage(error)
         })
     }
@@ -116,11 +114,13 @@ export default function SignUp() {
 
             <S.AuthForm onSubmit={handleSubmit}>
                 <input
+                    required
                     type="email"
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
                 ></input>
                 <input
+                    required
                     type="password"
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}

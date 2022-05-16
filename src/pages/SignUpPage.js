@@ -106,7 +106,8 @@ export default function SignUp() {
                 errorMessage = "E-mail already registered!."
                 break
             case 422:
-                errorMessage = "Both e-mail and password need to be filled in."
+                errorMessage =
+                    "Both e-mail and password need to be filled in correctly."
                 break
             case 500:
                 errorMessage = "Something went wrong. Please try again later."

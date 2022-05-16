@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import "react-slideshow-image/dist/styles.css"
@@ -11,50 +11,78 @@ import Footer from "../components/Footer.js"
 import { UserContext } from "../contexts/UserContext"
 import { MenuContext } from "./../contexts/MenuContext.js"
 
-export default function Game() {
+export default function GamePage() {
+    const token = localStorage.getItem("token")
     const { gameId } = useParams()
-
     const navigate = useNavigate()
-    const URL = `${process.env.REACT_APP_API_URL}/games/${gameId}`
-
     const { userInfo, setUserInfo } = useContext(UserContext)
-    const { gamesInCart } = userInfo
+    const URL = `${process.env.REACT_APP_API_URL}/games/${gameId}`
 
     const { menuIsOpen } = useContext(MenuContext)
 
-    const [gameInCart, setGameInCart] = useState(false)
     const [game, setGame] = useState(() => {
         const promise = axios.get(URL)
         promise.then((response) => {
             setGame(response.data)
-            for (let i = 0; i < gamesInCart.length; i++) {
-                if (gamesInCart[i].id === response.data.id) {
-                    setGameInCart(true)
-                }
-            }
         })
         promise.catch((e) => {
             console.log(e)
         })
     })
+    const [gameInCart, setGameInCart] = useState(false)
+
+    useEffect(() => {
+        if (
+            userInfo.gamesInCart?.some(
+                (gameInCart) => gameInCart.id === game?.id
+            )
+        ) {
+            console.log("setei")
+
+            setGameInCart(true)
+        } else {
+            console.log("setei agora como falso")
+
+            setGameInCart(false)
+        }
+    }, [game?.id, userInfo])
+
+    function handleButtonClick(e) {
+        e.stopPropagation()
+
+        if (!gameInCart) {
+            if (token)
+                axios
+                    .put(
+                        `${process.env.REACT_APP_API_URL}/cart`,
+                        { newGame: game },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    )
+                    .then((response) => console.log(response))
+                    .catch((error) => console.log(error))
+            const newGame = game
+            if (!userInfo.gamesInCart) {
+                userInfo.gamesInCart = []
+            }
+            setUserInfo({
+                ...userInfo,
+                gamesInCart: [...userInfo.gamesInCart, newGame],
+            })
+            setGameInCart(true)
+        } else {
+            navigate("/checkout")
+        }
+    }
 
     const carouselCover = game?.images?.cover
     const carouselImages = game?.images?.screenshots
 
     if (carouselImages) {
         Array.from(carouselImages)
-    }
-
-    function addToCart() {
-        const otherGamesInCart = userInfo.gamesInCart
-        const newGame = game
-        const totalGames = otherGamesInCart.concat(newGame)
-        setUserInfo({ ...userInfo, gamesInCart: totalGames })
-        setGameInCart(true)
-    }
-
-    function navigateToCheckout() {
-        navigate("/checkout")
     }
 
     return game ? (
@@ -106,14 +134,14 @@ export default function Game() {
                         </S.PriceContainer>
 
                         {gameInCart ? (
-                            <button onClick={navigateToCheckout}>
+                            <button onClick={(e) => handleButtonClick(e)}>
                                 <BsFillCartCheckFill />
                                 Checkout now
                             </button>
                         ) : (
                             <button
-                                onClick={() => {
-                                    addToCart()
+                                onClick={(e) => {
+                                    handleButtonClick(e)
                                 }}
                             >
                                 <BsCartPlus />

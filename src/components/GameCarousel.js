@@ -1,15 +1,27 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 import * as S from "./../styles/styles.js"
 import AddToCartButton from "./AddToCartButton.js"
 import { UserContext } from "../contexts/UserContext"
 
 export default function GameCarousel(props) {
+    const token = localStorage.getItem("token")
     const { game } = props
     const [gameInCart, setGameInCart] = useState(false)
     const { userInfo, setUserInfo } = useContext(UserContext)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (
+            userInfo.gamesInCart?.some(
+                (gameInCart) => gameInCart.id === game?.id
+            )
+        ) {
+            setGameInCart(true)
+        }
+    }, [game?.id, userInfo])
 
     function handleClick(e) {
         e.stopPropagation()
@@ -20,7 +32,23 @@ export default function GameCarousel(props) {
         e.stopPropagation()
 
         if (!gameInCart) {
-            const newGame = game.id
+            if (token)
+                axios
+                    .put(
+                        `${process.env.REACT_APP_API_URL}/cart`,
+                        { newGame: game },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    )
+                    .then((response) => console.log(response))
+                    .catch((error) => console.log(error))
+            const newGame = game
+            if (!userInfo.gamesInCart) {
+                userInfo.gamesInCart = []
+            }
             setUserInfo({
                 ...userInfo,
                 gamesInCart: [...userInfo.gamesInCart, newGame],
