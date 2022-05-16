@@ -1,6 +1,6 @@
-import React from "react"
+import { useContext, useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
+
 import { AiOutlineMenu } from "react-icons/ai"
 
 import axios from "axios"
@@ -12,12 +12,32 @@ import { UserContext } from "../contexts/UserContext"
 import { MenuContext } from "../contexts/MenuContext"
 
 export default function Header() {
-    const { userInfo } = useContext(UserContext)
+    const token = localStorage.getItem("token")
+    const { userInfo, setUserInfo } = useContext(UserContext)
     const { menuIsOpen, setMenuIsOpen } = useContext(MenuContext)
-    const { name, image } = userInfo
     const [search, setSearch] = useState(false)
     const [searchParams, setSearchParams] = useState("")
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (token) {
+            axios
+                .get(`${process.env.REACT_APP_API_URL}/user`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    console.log("token válido")
+                    setUserInfo({ ...response.data })
+                })
+                .catch((error) => {
+                    if (error.response?.data === "TokenExpiredError") {
+                        localStorage.removeItem("token")
+                    }
+                })
+        }
+    }, [])
 
     function searchGame() {
         const promise = axios.get(
@@ -30,6 +50,12 @@ export default function Header() {
         promise.catch((e) => {
             console.log(e)
         })
+    }
+
+    function handleLogout() {
+        localStorage.removeItem("token")
+        setUserInfo({})
+        // setMenuIsOpen(false)
     }
 
     return (
@@ -54,7 +80,7 @@ export default function Header() {
                     />
                 </S.SearchContainer>
             ) : (
-                <S.Nav>
+                <S.Header>
                     <Link
                         to="/"
                         onClick={() => {
@@ -67,6 +93,7 @@ export default function Header() {
                         ></img>
                     </Link>
                     <S.CartIcon />
+                    {userInfo.gamesInCart?.length}
                     <S.SearchIcon
                         onClick={() => {
                             setSearch(true)
@@ -81,7 +108,7 @@ export default function Header() {
                         <AiOutlineMenu />
                         <span>MENU</span>
                     </S.MenuHeaderContainer>
-                </S.Nav>
+                </S.Header>
             )}
 
             {menuIsOpen ? (
@@ -95,18 +122,24 @@ export default function Header() {
                         <p>Browse all games</p>
                     </Link>
                     <S.ProfileContainer>
-                        {name ? (
-                            <S.Profile>
-                                {image ? (
-                                    <img src={image} alt="User profile" />
-                                ) : (
-                                    <img
-                                        src={genericProfileImage}
-                                        alt="User profile"
-                                    />
-                                )}
-                                <span>{name}</span>
-                            </S.Profile>
+                        {userInfo?.name ? (
+                            <>
+                                <S.Profile>
+                                    {userInfo?.image ? (
+                                        <img
+                                            src={userInfo.image}
+                                            alt="User profile"
+                                        />
+                                    ) : (
+                                        <img
+                                            src={genericProfileImage}
+                                            alt="User profile"
+                                        />
+                                    )}
+                                    <span>{userInfo.name}</span>
+                                </S.Profile>
+                                <button onClick={handleLogout}>Logout</button>
+                            </>
                         ) : (
                             <Link
                                 to="/sign-in"
