@@ -31,6 +31,8 @@ export const theme = {
         authPageBackgroundColor: "#612f74",
         authButtonBackgroundColor: "#bf40bf",
         authDisabledButtonBackgroundColor: "#9c9c9c",
+
+        scrollbarColor: "#1a1a1a",
     },
     spacing: {
         headerHeight: "50px",
