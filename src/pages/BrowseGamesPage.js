@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
+import { useLocation } from "react-router-dom"
 import axios from "axios"
 
 import * as S from "../styles/styles"
@@ -7,14 +8,22 @@ import LabelSectionTitle from "../components/LabelSectionTitle"
 import GamesContainer from "../components/GamesContainer"
 import Footer from "./../components/Footer.js"
 import { MenuContext } from "./../contexts/MenuContext.js"
+import { LoadingContext } from "./../contexts/LoadingContext.js"
 
 export default function BrowseGamesPage() {
+    const { isLoading, setIsLoading } = useContext(LoadingContext)
+
+    const queryFromMainPage = useLocation().state?.queryFromMainPage
+
     const [games, setGames] = useState()
     const [gameQuery, setGameQuery] = useState("")
-    const [sort, setSort] = useState("desc:amountSold")
+    const [sort] = useState("desc:amountSold")
     const { menuIsOpen } = useContext(MenuContext)
 
     useEffect(() => {
+        setIsLoading(true)
+        if (queryFromMainPage) setGameQuery(queryFromMainPage)
+
         const queryParameter = gameQuery ? `q=${gameQuery}&` : ""
         const sortParameter = sort ? `order=${sort}&` : ""
         axios
@@ -23,11 +32,16 @@ export default function BrowseGamesPage() {
             )
             .then((response) => {
                 setGames(response.data)
+                setIsLoading(false)
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                setIsLoading(false)
+            })
     }, [gameQuery, sort])
 
-    return (
+    return isLoading ? (
+        <S.LoadingContainer>Loading...</S.LoadingContainer>
+    ) : (
         <>
             <S.Container menuIsOpen={menuIsOpen}>
                 <S.BrowseGamesPage>

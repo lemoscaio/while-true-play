@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import {
     BsFillExclamationTriangleFill,
     BsCheckCircleFill,
@@ -9,24 +9,15 @@ import axios from "axios"
 
 import * as S from "./../styles/styles.js"
 import StoreLogo from "./../assets/logo.png"
-import { UserContext } from "../contexts/UserContext"
 
 export default function SignUp() {
     const navigate = useNavigate()
-    const token = localStorage.getItem("token")
     const URL = `${process.env.REACT_APP_API_URL}/sign-in`
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const [requestMessage, setRequestMessage] = useState({})
-
-    useEffect(() => {
-        if (token) {
-            navigate("/")
-            return
-        }
-    }, [])
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -48,8 +39,6 @@ export default function SignUp() {
         })
 
         promise.catch((error) => {
-            console.log(error)
-
             setRequestMessage(error)
         })
     }

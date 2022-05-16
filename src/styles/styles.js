@@ -21,24 +21,43 @@ export const Container = styled.main`
     ${({ menuIsOpen }) => {
         return menuIsOpen ? "position: fixed" : ""
     }};
+
+    @media (min-width: 700px) {
+        width: 700px;
+        margin: 0 auto;
+        margin-top: ${({ theme }) => theme.spacing.headerHeight};
+    }
+`
+
+export const LoadingContainer = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    color: ${({ theme }) => theme.colors.secondaryFontColor};
 `
 
 // HEADER
 
 export const Header = styled.header`
     width: 100vw;
+    margin: 0 auto;
     height: ${({ theme }) => theme.spacing.headerHeight};
 
     position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background: #1a1a1a;
+    background-color: ${({ theme }) => theme.colors.footerBackgroundColor};
     top: 0;
     z-index: 10;
 
     font-size: 12px;
-    color: #a6a6a6;
+    color: ${({ theme }) => theme.colors.headerFontColor};
+
+    user-select: none;
 
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 
@@ -56,7 +75,7 @@ export const Header = styled.header`
 
     svg {
         font-size: 22px;
-        color: #a6a6a6;
+        color: ${({ theme }) => theme.colors.headerFontColor};
     }
 
     div {
@@ -73,6 +92,24 @@ export const CartIcon = styled(TiShoppingCart)`
     cursor: pointer;
 `
 
+export const CartLabel = styled.p`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${({ theme }) => theme.colors.cartLabelFontColor};
+    width: 20px;
+    height: 20px;
+    background-color: ${({ theme }) => theme.colors.cartLabelBackgroundColor};
+    text-align: center;
+    border-radius: 50%;
+
+    transform: translateY(-5px);
+
+    padding: 0;
+    margin: 0;
+`
+
 export const SearchIcon = styled(BiSearchAlt2)`
     cursor: pointer;
 `
@@ -87,18 +124,20 @@ export const MenuHeaderContainer = styled.div`
 
 export const SearchContainer = styled.header`
     width: 100vw;
+    max-width: ${({ theme }) => theme.spacing.maxBodyWidth};
     height: ${({ theme }) => theme.spacing.headerHeight};
 
     position: fixed;
     top: 0;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background: #1a1a1a;
     z-index: 10;
 
     font-size: 12px;
-    color: #a6a6a6;
-    padding: 5px 5px 5px 5px;
+    color: ${({ theme }) => theme.colors.headerFontColor};
+    padding: 5px 20px;
 
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 
@@ -110,7 +149,7 @@ export const SearchContainer = styled.header`
         outline: none;
         background: linear-gradient(gray, gray) center bottom 1px /
             calc(100% - 4px) 1px no-repeat;
-        color: white;
+        color: ${({ theme }) => theme.colors.headerFontColor};
         font-size: 16px;
     }
 
@@ -121,14 +160,22 @@ export const SearchContainer = styled.header`
 `
 
 export const NavMenu = styled.div`
-    width: 100vw;
-    height: 100vh;
     position: fixed;
-    top: 50px;
-    background: #1a1a1a;
+    top: ${({ theme }) => theme.spacing.headerHeight};
     z-index: 10;
+    left: 0;
+    right: 0;
+    /* width: 100vw; */
+    /* max-width: ${({ theme }) => theme.spacing.maxBodyWidth}; */
+    height: calc(100vh - ${({ theme }) => theme.spacing.headerHeight});
 
-    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+
+    background-color: ${({ theme }) => theme.colors.footerBackgroundColor};
+
+    padding: 10px 20px;
     opacity: 0.99;
 
     p {
@@ -143,20 +190,27 @@ export const NavMenu = styled.div`
 `
 
 export const ProfileContainer = styled.section`
-    position: absolute;
-    bottom: 60px;
-    left: 0;
-
-    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     height: 80px;
-    padding: 30px 50px;
-    border-top: 1px solid gray;
+    /* padding: 30px 50px; */
+    border-bottom: 1px solid gray;
     text-align: center;
 
     h1 {
         font-size: 16px;
-        color: #cb96e6;
+        color: ${({ theme }) => theme.colors.menuLinkColor};
         font-weight: 400;
+    }
+`
+
+export const AuthLinksContainer = styled(ProfileContainer)`
+    justify-content: center;
+
+    a {
+        margin: 0 20px;
     }
 `
 
@@ -176,6 +230,16 @@ export const Profile = styled.div`
         color: white;
         font-weight: 300;
     }
+`
+
+export const LogoutButton = styled.button`
+    margin: 10px;
+    padding: 5px 10px;
+    background-color: ${({ theme }) =>
+        theme.colors.logoutButtonBackgroundColor};
+    color: ${({ theme }) => theme.colors.logoutButtonFontColor};
+
+    border: none;
 `
 
 // FOOTER
@@ -370,6 +434,8 @@ export const BrowseGamesLink = styled.button`
     width: 100%;
 
     background-color: transparent;
+
+    color: ${({ theme }) => theme.colors.mainFontColor};
 
     padding: 15px;
 
@@ -799,7 +865,7 @@ export const MainContainer = styled.main`
 
 export const OrderContainer = styled.section`
     width: 100%;
-    margin-top: 20px;
+    padding-top: 20px;
 
     label {
         margin-left: 15px;
@@ -898,5 +964,23 @@ export const FinishPayment = styled.div`
         background-image: linear-gradient(-180deg, #9fbf00, #80ab00 91%);
         box-shadow: 0 1px 3px 0 rgb(0 0 0 / 25%);
         font-weight: bold;
+
+        &[disabled] {
+            border: none;
+            background-image: none;
+            background-color: ${({ theme }) =>
+                theme.colors.authDisabledButtonBackgroundColor};
+        }
     }
+`
+
+export const CheckoutErrorMessage = styled(ErrorMessage)`
+    width: 80%;
+    margin: 0 auto;
+    margin: 30px auto;
+`
+
+export const CheckoutSuccessMessage = styled(CheckoutErrorMessage)`
+    background-color: ${({ theme }) => theme.colors.succesMessageFontColor};
+    color: ${({ theme }) => theme.colors.errorMessageBackgroundColor};
 `

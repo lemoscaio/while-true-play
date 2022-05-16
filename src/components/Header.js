@@ -28,7 +28,6 @@ export default function Header() {
                     },
                 })
                 .then((response) => {
-                    console.log("token válido")
                     setUserInfo({ ...response.data })
                 })
                 .catch((error) => {
@@ -44,18 +43,19 @@ export default function Header() {
             `${process.env.REACT_APP_API_URL}/games?q=${searchParams}`
         )
         promise.then((response) => {
-            navigate(`/games?q=${searchParams}`)
+            navigate(`/games`, { state: { queryFromMainPage: searchParams } })
             setSearch(false)
         })
-        promise.catch((e) => {
-            console.log(e)
-        })
+        promise.catch((e) => {})
     }
 
     function handleLogout() {
         localStorage.removeItem("token")
         setUserInfo({})
-        // setMenuIsOpen(false)
+    }
+
+    function handleCheckout() {
+        navigate("/checkout")
     }
 
     return (
@@ -64,7 +64,8 @@ export default function Header() {
                 <S.SearchContainer>
                     <S.SearchIcon onClick={searchGame} />
                     <input
-                        type="text"
+                        autoFocus
+                        type="search"
                         onChange={(e) => setSearchParams(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
@@ -92,8 +93,12 @@ export default function Header() {
                             alt="While True Play Store logo"
                         ></img>
                     </Link>
-                    <S.CartIcon />
-                    {userInfo.gamesInCart?.length}
+                    <div>
+                        <S.CartIcon onClick={handleCheckout} />
+                        <S.CartLabel>
+                            {userInfo.gamesInCart?.length}
+                        </S.CartLabel>
+                    </div>
                     <S.SearchIcon
                         onClick={() => {
                             setSearch(true)
@@ -105,14 +110,62 @@ export default function Header() {
                             setMenuIsOpen(!menuIsOpen)
                         }}
                     >
-                        <AiOutlineMenu />
-                        <span>MENU</span>
+                        {!menuIsOpen ? (
+                            <>
+                                <AiOutlineMenu />
+                                <span>MENU</span>
+                            </>
+                        ) : (
+                            <span>CLOSE</span>
+                        )}
                     </S.MenuHeaderContainer>
                 </S.Header>
             )}
 
             {menuIsOpen ? (
                 <S.NavMenu>
+                    {userInfo?.name ? (
+                        <S.ProfileContainer>
+                            <S.Profile>
+                                {userInfo?.image ? (
+                                    <img
+                                        src={userInfo.image}
+                                        alt="User profile"
+                                    />
+                                ) : (
+                                    <img
+                                        src={genericProfileImage}
+                                        alt="User profile"
+                                    />
+                                )}
+                                <span>{userInfo.name}</span>
+                            </S.Profile>
+                            <S.LogoutButton onClick={handleLogout}>
+                                Logout
+                            </S.LogoutButton>
+                        </S.ProfileContainer>
+                    ) : (
+                        <S.AuthLinksContainer>
+                            <Link
+                                to="/sign-in"
+                                onClick={() => {
+                                    setMenuIsOpen(false)
+                                }}
+                            >
+                                <h1>SIGN IN</h1>
+                            </Link>{" "}
+                            <p>OR</p>
+                            <Link
+                                to="/sign-up"
+                                onClick={() => {
+                                    setMenuIsOpen(false)
+                                }}
+                            >
+                                <h1>SIGN UP</h1>
+                            </Link>
+                        </S.AuthLinksContainer>
+                    )}
+
                     <Link
                         to="/games"
                         onClick={() => {
@@ -121,39 +174,9 @@ export default function Header() {
                     >
                         <p>Browse all games</p>
                     </Link>
-                    <S.ProfileContainer>
-                        {userInfo?.name ? (
-                            <>
-                                <S.Profile>
-                                    {userInfo?.image ? (
-                                        <img
-                                            src={userInfo.image}
-                                            alt="User profile"
-                                        />
-                                    ) : (
-                                        <img
-                                            src={genericProfileImage}
-                                            alt="User profile"
-                                        />
-                                    )}
-                                    <span>{userInfo.name}</span>
-                                </S.Profile>
-                                <button onClick={handleLogout}>Logout</button>
-                            </>
-                        ) : (
-                            <Link
-                                to="/sign-in"
-                                onClick={() => {
-                                    setMenuIsOpen(false)
-                                }}
-                            >
-                                <h1>SIGN IN</h1>
-                            </Link>
-                        )}
-                    </S.ProfileContainer>
                 </S.NavMenu>
             ) : (
-                ""
+                <></>
             )}
         </>
     )

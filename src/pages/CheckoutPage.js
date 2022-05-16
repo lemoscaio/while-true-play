@@ -1,14 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useContext } from "react"
+import {
+    BsFillExclamationTriangleFill,
+    BsCheckCircleFill,
+} from "react-icons/bs"
 
+import Footer from "../components/Footer.js"
 import { UserContext } from "../contexts/UserContext"
-import * as S from "./../styles/styles.js"
+
+import * as S from "../styles/styles.js"
 
 export default function Checkout() {
     const token = localStorage.getItem("token")
-    const { userInfo } = useContext(UserContext)
+    const [requestMessage, setRequestMessage] = useState({})
+    const [realizedOrder, setRealizedOrder] = useState(false)
+
+    const { userInfo, setUserInfo } = useContext(UserContext)
     const navigate = useNavigate()
 
     const URL = `${process.env.REACT_APP_API_URL}/checkout`
@@ -35,19 +44,62 @@ export default function Checkout() {
             const promise = axios.post(URL, reqBody, reqConfig)
 
             promise.then((response) => {
-                alert("Games bought and added into your account.")
-                navigate("/")
+                setUserInfo({ ...userInfo, gamesInCart: [] })
+                setRealizedOrder(true)
+                setRequestMessage(response)
             })
-            promise.catch((e) => {
-                alert("Something went wrong.")
-                console.log(e)
+            promise.catch((error) => {
+                setRealizedOrder(false)
+                setRequestMessage(error)
             })
         }
     }
 
+    function setErrorContainerContent() {
+        let errorMessage = ""
+
+        switch (requestMessage.response?.status) {
+            case 0:
+                errorMessage = "Connection error. Please, try again later."
+                break
+            case 500:
+                errorMessage = "Something went wrong. Please try again later."
+                break
+            default:
+                break
+        }
+        return errorMessage.length > 0 ? (
+            <S.CheckoutErrorMessage>
+                <BsFillExclamationTriangleFill /> {errorMessage}
+            </S.CheckoutErrorMessage>
+        ) : (
+            <></>
+        )
+    }
+
+    function setSuccessContainerContent() {
+        let successMessage = ""
+
+        switch (requestMessage?.status) {
+            case 200:
+            case 201:
+                successMessage = "Games bought and added into your account."
+                break
+            default:
+                break
+        }
+        return successMessage.length > 0 ? (
+            <S.CheckoutSuccessMessage>
+                <BsCheckCircleFill /> {successMessage}
+            </S.CheckoutSuccessMessage>
+        ) : (
+            <></>
+        )
+    }
+
     return (
         <>
-            <S.MainContainer>
+            <S.Container>
                 <S.OrderContainer>
                     <label>YOUR ORDER</label>
 
@@ -58,6 +110,7 @@ export default function Checkout() {
                             hasDiscount,
                             price,
                             discountAmount,
+                            id,
                         } = game
                         let discountedPrice
 
@@ -70,7 +123,7 @@ export default function Checkout() {
                         }
                         fixedPrice = totalPrice.toFixed(2)
                         return (
-                            <S.GameContainer>
+                            <S.GameContainer key={id}>
                                 <img
                                     src={images.cover}
                                     alt={`${title} cover`}
@@ -105,7 +158,8 @@ export default function Checkout() {
                         </h5>
                     </S.GameContainer>
                 </S.OrderContainer>
-
+                {setErrorContainerContent()}
+                {setSuccessContainerContent()}
                 <S.PaymentContainer>
                     <form onSubmit={buyGames}>
                         <S.ConfirmPayment>
@@ -116,11 +170,14 @@ export default function Checkout() {
                         </S.ConfirmPayment>
                         <S.FinishPayment>
                             <h3>R$ {fixedPrice}</h3>
-                            <button>Check out now</button>
+                            <button disabled={realizedOrder}>
+                                Check out now
+                            </button>
                         </S.FinishPayment>
                     </form>
                 </S.PaymentContainer>
-            </S.MainContainer>
+            </S.Container>
+            <Footer />
         </>
     )
 }

@@ -43,8 +43,8 @@ export default function GameCarousel(props) {
                             },
                         }
                     )
-                    .then((response) => console.log(response))
-                    .catch((error) => console.log(error))
+                    .then()
+                    .catch()
             const newGame = game
             if (!userInfo.gamesInCart) {
                 userInfo.gamesInCart = []
