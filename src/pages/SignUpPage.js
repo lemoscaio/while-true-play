@@ -12,7 +12,6 @@ import StoreLogo from "./../assets/logo.png"
 
 export default function SignUp() {
     const navigate = useNavigate()
-    const token = localStorage.getItem("token")
 
     const URL = `${process.env.REACT_APP_API_URL}/sign-up`
 
@@ -24,13 +23,6 @@ export default function SignUp() {
     const [matchingPassword, setMatchingPassword] = useState(false)
 
     const [requestMessage, setRequestMessage] = useState({})
-
-    useEffect(() => {
-        if (token) {
-            navigate("/")
-            return
-        }
-    }, [])
 
     function handleSubmit(e) {
         e.preventDefault()

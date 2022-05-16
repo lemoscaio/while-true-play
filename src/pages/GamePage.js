@@ -10,9 +10,12 @@ import * as S from "./../styles/styles.js"
 import Footer from "../components/Footer.js"
 import { UserContext } from "../contexts/UserContext"
 import { MenuContext } from "./../contexts/MenuContext.js"
+import { LoadingContext } from "./../contexts/LoadingContext.js"
 
 export default function GamePage() {
     const token = localStorage.getItem("token")
+    const { isLoading, setIsLoading } = useContext(LoadingContext)
+
     const { gameId } = useParams()
     const navigate = useNavigate()
     const { userInfo, setUserInfo } = useContext(UserContext)
@@ -21,12 +24,14 @@ export default function GamePage() {
     const { menuIsOpen } = useContext(MenuContext)
 
     const [game, setGame] = useState(() => {
+        setIsLoading(true)
         const promise = axios.get(URL)
         promise.then((response) => {
             setGame(response.data)
+            setIsLoading(false)
         })
         promise.catch((e) => {
-            console.log(e)
+            setIsLoading(false)
         })
     })
     const [gameInCart, setGameInCart] = useState(false)
@@ -37,12 +42,8 @@ export default function GamePage() {
                 (gameInCart) => gameInCart.id === game?.id
             )
         ) {
-            console.log("setei")
-
             setGameInCart(true)
         } else {
-            console.log("setei agora como falso")
-
             setGameInCart(false)
         }
     }, [game?.id, userInfo])
@@ -62,8 +63,8 @@ export default function GamePage() {
                             },
                         }
                     )
-                    .then((response) => console.log(response))
-                    .catch((error) => console.log(error))
+                    .then()
+                    .catch()
             const newGame = game
             if (!userInfo.gamesInCart) {
                 userInfo.gamesInCart = []
@@ -85,7 +86,9 @@ export default function GamePage() {
         Array.from(carouselImages)
     }
 
-    return game ? (
+    return isLoading ? (
+        <S.LoadingContainer>Loading...</S.LoadingContainer>
+    ) : game ? (
         <>
             <S.Container menuIsOpen={menuIsOpen}>
                 <S.GameImagesCarousel>
@@ -155,10 +158,7 @@ export default function GamePage() {
                         <p>{game.description}</p>
                     </S.DescriptionContainer>
 
-                    <S.SimilarProductsContainer>
-                        <h3>You may like these products</h3>
-                        {/*!!! INSERT GAMES CARDS HERE WHEN DONE !!!*/}
-                    </S.SimilarProductsContainer>
+                    <S.SimilarProductsContainer></S.SimilarProductsContainer>
                 </S.GamePage>
             </S.Container>
             <Footer />

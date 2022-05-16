@@ -6,10 +6,6 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-}
-
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -17,7 +13,9 @@ html {
 
 body {
   margin: 0;
+  font-family: 'Inter', sans-serif;
   background: #F2F2F2;
+  background-color: ${({ theme }) => theme.colors.bodyBackgroundColor};
 
   &::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);

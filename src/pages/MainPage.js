@@ -9,17 +9,23 @@ import BrowseGamesLink from "./../components/BrowseGamesLink.js"
 import Footer from "./../components/Footer.js"
 import * as S from "./../styles/styles.js"
 import { MenuContext } from "./../contexts/MenuContext.js"
+import { LoadingContext } from "./../contexts/LoadingContext.js"
 
 export default function MainPage() {
+    const { isLoading, setIsLoading } = useContext(LoadingContext)
     const [fourBestSelling, setFourBestSelling] = useState(() => {
+        setIsLoading(true)
         axios
             .get(
                 `${process.env.REACT_APP_API_URL}/games?limit=4&order=desc:amountSold`
             )
             .then((response) => {
                 setFourBestSelling(response.data)
+                setIsLoading(false)
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                setIsLoading(false)
+            })
     })
     const [mostViewed, setMostViewed] = useState()
     const [fourMostViewed, setFourMostViewed] = useState(() => {
@@ -31,7 +37,7 @@ export default function MainPage() {
                 setMostViewed(response.data.shift())
                 setFourMostViewed(response.data)
             })
-            .catch((error) => console.log(error))
+            .catch()
     })
     const [fiveMostRecent, setFiveMostRecent] = useState(() => {
         axios
@@ -41,12 +47,14 @@ export default function MainPage() {
             .then((response) => {
                 setFiveMostRecent(response.data)
             })
-            .catch((error) => console.log(error))
+            .catch()
     })
 
     const { menuIsOpen } = useContext(MenuContext)
 
-    return (
+    return isLoading ? (
+        <S.LoadingContainer>Loading...</S.LoadingContainer>
+    ) : (
         <>
             <S.Container menuIsOpen={menuIsOpen}>
                 <GameHighlight game={mostViewed} />
