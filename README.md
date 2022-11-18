@@ -1,71 +1,57 @@
-# Getting Started with Create React App
+<div align="center"><img style = "width:100%;"src="https://i.imgur.com/E4eufn5.png"></img></div>
+<br>
+<h1 align=center>While (true) Play Store</h1>
+<h3 align=center>While (true) Play is a mock store website for games.</h3>
+<h4 align=center>It was the 14ᵗʰ project developed during the Driven Full Stack Bootcamp in pairs (see contributors in the end).</h4>
+<br>
+<div align=center style="display:flex; justify-content: center; gap:5%">
+    <img style = "width:90%;"src="https://i.imgur.com/gsirfqO.png">
+</div>
+<br><hr>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## App Features
 
-## Available Scripts
+- See a list of games available with their info:
+  - Name
+  - Cover
+  - Price (and discount rate)
+- Keep track of how many games you have added to your cart
+- Go to checkout once you add a game to the cart
+- Go to the game page with more information about it:
+  - Name
+  - Cover and Screenshots (in a carousel)
+  - Discount rate
+  - Original and discounted price
+  - Description
+- Create an account with a name, email, and password that will be encrypted in the database
 
-In the project directory, you can run:
+## Tech Features
 
-### `npm start`
+- All data fetched from a dedicated server 
+- Used react router dom to create routers for the App
+- Styles using Styled-Components
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Built with
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![Styled-Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
-### `npm test`
+## Contributors
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<a href="https://github.com/lemoscaio/while-true-play-api/graphs/contributors">
+  <img src="https://i.imgur.com/FCs51ZS.png" width="80"">
+  <img src="https://i.imgur.com/GGWjPrM.png" width="80"">
+</a>
 
-### `npm run build`
+## Contact
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# projeto14-while_true_play-front
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=blue
+[linkedin-url]: https://www.linkedin.com/in/caiodeoliveiralemos/
